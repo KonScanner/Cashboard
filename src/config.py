@@ -17,7 +17,7 @@ class Config():
                      'thumbnail',
                      'urls',
                      'video']
-    COLUMNS_SEACH: list = ['created_at',
+    COLUMNS_SEARCH: list = ['created_at',
                      'date',
                      'cashtags',
                      'timezone',
