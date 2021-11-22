@@ -13,10 +13,11 @@ class TwitterScraper(Config):
         self.limit = limit
         nest_asyncio.apply()
         self.tweets = []
-        self.out_path = "./data/" + f"{self.username}.csv"
         if username is not None:
+            self.out_path = "./data/" + f"{self.username}.csv"
             self.scrape_user()
         else:
+            self.out_path = "./data/" + f"{self.search}.csv"
             self.scrape_search()
 
     def scrape_user(self):
