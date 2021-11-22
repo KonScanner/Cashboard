@@ -46,4 +46,4 @@ class TwitterScraper(Config):
         c.Custom_csv = Config.COLUMNS
         c.Output = self.out_path
         twint.run.Search(c)
-        self.df = twint.storage.panda.Tweets_df[Config.COLUMNS_SEACH]
+        self.df = twint.storage.panda.Tweets_df[Config.COLUMNS_SEARCH]
