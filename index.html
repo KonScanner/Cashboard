@@ -6,12 +6,37 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script name="css/main.css"></script>
+	<script src="js/main.js"></script>
 	<title>Cashboard</title>
 </head>
 
 <body>
-	<h1>Test Title</h1>
+	<div>
+		<h1 class="w3-animate-fading"><a href="">Cashboard</a></h1>
+		<!-- <input type="text" id="searchID" onkeyup="searchFunction(this)" placeholder="Type Symbol"> -->
+		<label for="dropDownSymbol">Preset Symbols: </label>
+		<select id="dropDownSymbol">
+			<option value="BTC_USDT">BTC</option>
+			<option value="ETH_USDT">ETH</option>
+			<option value="ADA_USDT">ADA</option>
+			<option value="AVAX_USDT">AVAX</option>
+		</select>
+		<input type="text" id="HiddenSymbol" hidden=True value="">
+
+		<br>
+		<br>
+		<label for="dropDownTime">Preset Symbols: </label>
+		<select id="dropDownTime">
+			<option value="1D">1 Day</option>
+			<option value="D">1 Week</option>
+			<option value="30">30 min</option>
+			<option value="15">15 min</option>
+			<option value="5">5 min</option>
+		</select>
+		<input type="text" id="HiddenTime" hidden=True value="">
+	</div>
 
 </body>
+
 
 </html>
