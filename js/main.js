@@ -97,4 +97,3 @@ function get_data_with_symbol(symbol, time, from, to) {
 // 		li[i].style.display = "none";
 // 	}
 // }
-};
