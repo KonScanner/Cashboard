@@ -1,5 +1,3 @@
-let expression = "test";
-console.log(`string text ${expression}`);
 const supported_symbols = new Set(["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"])
 const supported_times = new Set(["5", "15", "30", "1D", "D"])
 
@@ -69,13 +67,78 @@ function get_data_with_symbol(symbol, time, from, to) {
 		// The API call was successful!
 		return response.json();
 	}).then(function (data) {
-		// This is the JSON from our response
+		// This is the JSON from the response
 		console.log(data);
 	}).catch(function (err) {
 		// There was an errr
-		consoleo.warn('Something went wrong.', err);
+		console.warn(`Error ${err}`);
 	});
 }
+
+function get_data_decrypt(per_page) {
+	// Fetches data, given news per page
+	fetch(`https://api.decrypt.co/content-elasticsearch/posts?_minimal=true&category=news&lang=en-US&offset=0&order=desc&orderby=date&per_page=${per_page}`).then(function (response) {
+		return response.json();
+	}).then(function (data) {
+		// This is the JSON from the response
+		console.log(data);
+	}).catch(function (err) {
+		console.warn(`Error ${err}`);
+	});
+}
+
+// Example POST method implementation:
+function getData(url = 'https://pyinvesting.com/fear-and-greed/cash-data') {
+
+	var xmlHttp = new JSONHttpRequest();
+	xmlHttp.open("GET", url, true); // false for synchronous request
+	request.setRequestHeader('X-Requested-With', 'JSONHttpRequest');
+	xmlHttp.send(null);
+	xmlHttp.getElementById("resp").innerText = xhr.responseText;
+	return xmlHttp.responseText;
+
+}
+
+
+function httpGet(theUrl) {
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, false); // false for synchronous request
+	request.setRequestHeader('X-Requested-With', 'JSONHttpRequest');
+	xmlHttp.send(null);
+	return xmlHttp.responseText;
+}
+// fetch('https://pyinvesting.com/fear-and-greed/cash-data', {
+// 	mode: 'cors',
+// 	headers: {
+// 		'Content-Type': 'application/json',
+// 		'Authorization': `pyinvesting.com`,
+// 	}
+// }).then(function (response) {
+// 	// The API call was successful!
+// 	if (response.ok) {
+// 		return response.json();
+// 	} else {
+// 		return Promise.reject(response);
+// 	}
+// }).then(function (data) {
+// 	// This is the JSON from our response
+// 	console.log(data);
+// }).catch(function (err) {
+// 	// There was an error
+// 	console.warn(err);
+// });
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === 4) {
+		console.log(this.responseText);
+	}
+});
+
+xhr.open("GET", "https://pyinvesting.com/fear-and-greed/cash-data");
+
+xhr.send();
 
 // function searchFunction(element) {
 // 	var input, filter, ul, li, a, i, txtValue;
