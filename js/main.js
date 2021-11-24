@@ -107,38 +107,38 @@ function httpGet(theUrl) {
 	xmlHttp.send(null);
 	return xmlHttp.responseText;
 }
-// fetch('https://pyinvesting.com/fear-and-greed/cash-data', {
-// 	mode: 'cors',
-// 	headers: {
-// 		'Content-Type': 'application/json',
-// 		'Authorization': `pyinvesting.com`,
-// 	}
-// }).then(function (response) {
-// 	// The API call was successful!
-// 	if (response.ok) {
-// 		return response.json();
-// 	} else {
-// 		return Promise.reject(response);
-// 	}
-// }).then(function (data) {
-// 	// This is the JSON from our response
-// 	console.log(data);
-// }).catch(function (err) {
-// 	// There was an error
-// 	console.warn(err);
-// });
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function () {
-	if (this.readyState === 4) {
-		console.log(this.responseText);
+fetch('https://pyinvesting.com/fear-and-greed/cash-data', {
+	mode: 'cors',
+	headers: {
+		'Content-Type': 'application/json',
+		'Access-Control-Allow-Origin': `pyinvesting.com`,
 	}
+}).then(function (response) {
+	// The API call was successful!
+	if (response.ok) {
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (data) {
+	// This is the JSON from our response
+	console.log(data);
+}).catch(function (err) {
+	// There was an error
+	console.warn(err);
 });
+// var xhr = new XMLHttpRequest();
+// xhr.withCredentials = true;
 
-xhr.open("GET", "https://pyinvesting.com/fear-and-greed/cash-data");
+// xhr.addEventListener("readystatechange", function () {
+// 	if (this.readyState === 4) {
+// 		console.log(this.responseText);
+// 	}
+// });
 
-xhr.send();
+// xhr.open("GET", "https://pyinvesting.com/fear-and-greed/cash-data");
+
+// xhr.send();
 
 // function searchFunction(element) {
 // 	var input, filter, ul, li, a, i, txtValue;
