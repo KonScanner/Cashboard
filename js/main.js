@@ -1,8 +1,7 @@
 const supported_symbols = new Set(["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"])
 const supported_times = new Set(["5", "15", "30", "1D", "D"])
 
-
-function subtractMinutes(date, minutes) {
+export function subtractMinutes(date, minutes) {
 	return new Date(date - minutes * 60000);
 }
 
@@ -33,42 +32,160 @@ function get_symbol(event) {
 	}
 	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
 		let time = document.getElementById("HiddenTime").value;
-		let data = deal_with_time(time);
-		let from = data[1];
-		let to = data[0]
-		console.log(to, from);
-		get_data_with_symbol(symbol = document.getElementById("HiddenSymbol").value, time = document.getElementById("HiddenTime").value, to = to, from = from);
+		let to = String(date_to_unix(get_today()))
+		let from = String(deal_with_time(time));
+		console.log("to", to, "from", from);
+
+		get_data_with_symbol(symbol = document.getElementById("HiddenSymbol").value, time = document.getElementById("HiddenTime").value, from = from, to = to);
 	}
+}
+
+function get_today() {
+	return Date.now();
+}
+
+function date_to_unix(date) {
+	return Math.floor(date / 1000)
 }
 
 function deal_with_time(time = "") {
 	// Makes sure the API is only fetched for the appropriate time ranges that are useful
-	let today = Date.now()
+	let today = get_today()
 	if (time === "") {
 		return;
 	}
-	if (time === "1D") {
-		default_window = Math.floor(subtractMinutes(date = today, minutes = 788401).getTime() / 1000); // 18 months
-		let _today = Math.ceil(Date.now() / 1000);
-		let data = [default_window, _today];
-		return data;
+	if (time === "D") {
+		return date_to_unix(subtractMinutes(date = today, minutes = 1051202).getTime()); // 18 months
 	}
-	// TODO: implement the rest of the times
+	if (time === "1D") {
+		return date_to_unix(subtractMinutes(date = today, minutes = 788401).getTime()); // 18 months
+
+	}
+	if (time === "30") {
+		return date_to_unix(subtractMinutes(date = today, minutes = 14400).getTime()); // 10 days
+	}
+	if (time === "15") {
+		return date_to_unix(subtractMinutes(date = today, minutes = 7200).getTime()); // 5 days
+
+	}
+	if (time === "5") {
+		return date_to_unix(subtractMinutes(date = today, minutes = 1440).getTime()); // 1 day
+	} else {
+		alert("Something Went Wrong")
+	}
 	return;
 }
 
 window.addEventListener('input', get_symbol, false);
 
 
+function get_chart(data, symbol, min_date, max_date) {
+
+
+	var options = {
+		series: [{
+			name: `${symbol}`,
+			data: data
+		}],
+		chart: {
+			id: 'area-datetime',
+			type: 'area',
+			height: 350,
+			zoom: {
+				autoScaleYaxis: true
+			},
+			redrawOnParentResize: true
+		},
+		annotations: {
+			yaxis: [{
+				y: 30,
+				borderColor: '#999',
+				label: {
+					show: true,
+					text: 'Support',
+					style: {
+						color: "#fff",
+						background: '#00E396'
+					}
+				}
+			}],
+			xaxis: [{
+				x: max_date,
+				borderColor: '#999',
+				yAxisIndex: 0,
+				label: {
+					show: true,
+					text: 'Rally',
+					style: {
+						color: "#fff",
+						background: '#775DD0'
+					}
+				}
+			}]
+		},
+		dataLabels: {
+			enabled: false
+		},
+		markers: {
+			size: 0,
+			style: 'hollow',
+		},
+		xaxis: {
+			type: 'datetime',
+			min: min_date,
+			tickAmount: 6,
+		},
+		yaxis: {
+			min: 0,
+			forceNiceScale: true,
+			decimalsInFloat: 2,
+		},
+		tooltip: {
+			x: {
+				format: 'dd MMM yyyy'
+			}
+		},
+		fill: {
+			type: 'gradient',
+			gradient: {
+				shadeIntensity: 1,
+				opacityFrom: 0.7,
+				opacityTo: 0.9,
+				stops: [0, 100]
+			}
+		},
+	};
+	let chart = new ApexCharts(document.querySelector("#chart"), options);
+	// chart.updateSeries([{
+	// 	name: `${symbol}`,
+	// 	data: data
+	// }], true);
+
+	chart.render();
+};
+
+
+function prepare_data(data) {
+	var dates = data.t.map(d => Math.floor(d * 1000));
+	let plot_ = []
+	for (let i = 0; i < data.o.length; i++) {
+		let c_p = (data.o[i] + data.c[i] + data.h[i] + data.l[i]) / 4;
+		plot_.push([dates[i], c_p])
+	}
+	return plot_;
+}
+
 
 function get_data_with_symbol(symbol, time, from, to) {
 	// Fetches data, given symbol,time,from,to
+	console.log(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time}&from=${from}&to=${to}`)
+	console.log(Date(Math.floor(from * 1000)), Date(Math.floor(to * 1000)))
 	fetch(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time}&from=${from}&to=${to}`).then(function (response) {
 		// The API call was successful!
 		return response.json();
 	}).then(function (data) {
-		// This is the JSON from the response
-		console.log(data);
+		plot_ = prepare_data(data);
+		get_chart(dates = plot_, symbol = symbol, max_date = dates.max, min_date = dates.min)
 	}).catch(function (err) {
 		// There was an errr
 		console.warn(`Error ${err}`);
@@ -81,52 +198,12 @@ function get_data_decrypt(per_page) {
 		return response.json();
 	}).then(function (data) {
 		// This is the JSON from the response
-		console.log(data);
+		return data;
 	}).catch(function (err) {
 		console.warn(`Error ${err}`);
 	});
 }
 
-// Example POST method implementation:
-function getData(url = 'https://pyinvesting.com/fear-and-greed/cash-data') {
-
-	var xmlHttp = new JSONHttpRequest();
-	xmlHttp.open("GET", url, true); // false for synchronous request
-	request.setRequestHeader('X-Requested-With', 'JSONHttpRequest');
-	xmlHttp.send(null);
-	xmlHttp.getElementById("resp").innerText = xhr.responseText;
-	return xmlHttp.responseText;
-
-}
-
-
-function httpGet(theUrl) {
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("GET", theUrl, false); // false for synchronous request
-	request.setRequestHeader('X-Requested-With', 'JSONHttpRequest');
-	xmlHttp.send(null);
-	return xmlHttp.responseText;
-}
-fetch('https://pyinvesting.com/fear-and-greed/cash-data', {
-	mode: 'cors',
-	headers: {
-		'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin': `pyinvesting.com`,
-	}
-}).then(function (response) {
-	// The API call was successful!
-	if (response.ok) {
-		return response.json();
-	} else {
-		return Promise.reject(response);
-	}
-}).then(function (data) {
-	// This is the JSON from our response
-	console.log(data);
-}).catch(function (err) {
-	// There was an error
-	console.warn(err);
-});
 // var xhr = new XMLHttpRequest();
 // xhr.withCredentials = true;
 
