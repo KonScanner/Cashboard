@@ -4,6 +4,12 @@
 	box-sizing: border-box;
 }
 
+main {
+	font-family: "Space Mono", monospace;
+	font-weight: bold;
+	font-size: 120%;
+}
+
 div {
 	display: flex;
 	flex-direction: column;
@@ -78,16 +84,29 @@ a {
 	text-decoration: none;
 }
 
-#container4 {
-	height: 10em;
-	position: relative
+#logo {
+	font-family: "Source Serif Pro", serif;
+	font-family: "Space Mono", monospace;
+	font-weight: lighter;
+	background-color: rgba(255, 255, 255, 0.145);
+	font-size: 250%;
 }
 
-#container4 p {
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%)
+#logo a:link {
+	text-decoration: none;
+	color: black;
+}
+
+#logo a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+#logo a:hover {
+	text-decoration: underline;
+}
+
+#logo a:active {
+	color: rgb(0, 0, 0);
+	background-color: white;
 }

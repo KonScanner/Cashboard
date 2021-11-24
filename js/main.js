@@ -1,7 +1,102 @@
 const supported_symbols = new Set(["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"])
 const supported_times = new Set(["5", "15", "30", "1D", "D"])
 
-export function subtractMinutes(date, minutes) {
+
+var opts = {
+	series: [],
+	title: {
+		text: "Price of asset vs Time",
+	},
+	chart: {
+		height: 350,
+		type: 'area',
+	},
+	chart: {
+		id: 'area-datetime',
+		type: 'area',
+		height: 350,
+		zoom: {
+			autoScaleYaxis: true
+		},
+		redrawOnParentResize: true
+	},
+	annotations: {
+		// yaxis: [{
+		// 	y: 30,
+		// 	borderColor: '#999',
+		// 	label: {
+		// 		show: true,
+		// 		text: 'Support',
+		// 		style: {
+		// 			color: "#fff",
+		// 			background: '#00E396'
+		// 		}
+		// 	}
+		// }],
+		xaxis: [{
+			borderColor: '#999',
+			yAxisIndex: 0,
+			label: {
+				show: true,
+				text: 'Rally',
+				style: {
+					color: "#fff",
+					background: '#775DD0'
+				}
+			}
+		}]
+	},
+	dataLabels: {
+		enabled: false
+	},
+	markers: {
+		size: 0,
+		style: 'hollow',
+	},
+	xaxis: {
+		type: 'datetime',
+		tickAmount: 6,
+	},
+	yaxis: {
+		min: 0,
+		forceNiceScale: true,
+		decimalsInFloat: 2,
+	},
+	tooltip: {
+		x: {
+			format: 'dd MMM yyyy'
+		}
+	},
+	fill: {
+		type: 'gradient',
+		gradient: {
+			shadeIntensity: 1,
+			opacityFrom: 0.7,
+			opacityTo: 0.9,
+			stops: [0, 100]
+		}
+	},
+	noData: {
+		text: "Loading...",
+		align: 'center',
+		verticalAlign: 'middle',
+		offsetX: 0,
+		offsetY: 0,
+		style: {
+			color: "black",
+			fontSize: '20px',
+			fontFamily: undefined
+		}
+	}
+}
+
+var chart = new ApexCharts(
+	document.querySelector("#chart"),
+	opts
+);
+chart.render();
+
+function subtractMinutes(date, minutes) {
 	return new Date(date - minutes * 60000);
 }
 
@@ -14,7 +109,6 @@ export function subtractMinutes(date, minutes) {
 // 		// get_data_with_symbol(symbol = event.target.value, time = "1D");
 // 	}
 // }, false);
-
 
 
 function get_symbol(event) {
@@ -81,11 +175,13 @@ window.addEventListener('input', get_symbol, false);
 
 function get_chart(data, symbol, min_date, max_date) {
 
-
 	var options = {
 		series: [{
 			name: `${symbol}`,
-			data: data
+			data: data,
+			title: {
+				text: `${symbol}`,
+			},
 		}],
 		chart: {
 			id: 'area-datetime',
@@ -97,76 +193,32 @@ function get_chart(data, symbol, min_date, max_date) {
 			redrawOnParentResize: true
 		},
 		annotations: {
-			yaxis: [{
-				y: 30,
-				borderColor: '#999',
-				label: {
-					show: true,
-					text: 'Support',
-					style: {
-						color: "#fff",
-						background: '#00E396'
-					}
-				}
-			}],
+
 			xaxis: [{
-				x: max_date,
-				borderColor: '#999',
-				yAxisIndex: 0,
-				label: {
-					show: true,
-					text: 'Rally',
-					style: {
-						color: "#fff",
-						background: '#775DD0'
-					}
-				}
+				max: max_date,
 			}]
-		},
-		dataLabels: {
-			enabled: false
-		},
-		markers: {
-			size: 0,
-			style: 'hollow',
+
 		},
 		xaxis: {
-			type: 'datetime',
-			min: min_date,
-			tickAmount: 6,
-		},
-		yaxis: {
-			min: 0,
-			forceNiceScale: true,
-			decimalsInFloat: 2,
-		},
-		tooltip: {
-			x: {
-				format: 'dd MMM yyyy'
-			}
-		},
-		fill: {
-			type: 'gradient',
-			gradient: {
-				shadeIntensity: 1,
-				opacityFrom: 0.7,
-				opacityTo: 0.9,
-				stops: [0, 100]
-			}
-		},
+			min: min_date
+		}
 	};
-	let chart = new ApexCharts(document.querySelector("#chart"), options);
+
+	// let _chart = document.querySelector("#chart");
+	// debugger
+	// let chart = new ApexCharts(_chart, options);
+	// chart.render();
 	// chart.updateSeries([{
 	// 	name: `${symbol}`,
 	// 	data: data
 	// }], true);
-
-	chart.render();
+	chart.updateOptions(options);
 };
 
 
 function prepare_data(data) {
 	var dates = data.t.map(d => Math.floor(d * 1000));
+
 	let plot_ = []
 	for (let i = 0; i < data.o.length; i++) {
 		let c_p = (data.o[i] + data.c[i] + data.h[i] + data.l[i]) / 4;
