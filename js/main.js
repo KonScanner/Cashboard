@@ -9,7 +9,7 @@ var opts = {
 	chart: {
 		type: 'candlestick',
 		height: 350,
-		width: "50%",
+		width: "99%",
 		zoom: {
 			autoScaleYaxis: true
 		},
