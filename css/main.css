@@ -1,8 +1,17 @@
-* {
-	margin: 0;
+body {
+	font-size: 100%;
+	/* background: black; */
+
+
+}
+
+html * {
 	padding: 0;
+	margin: 0;
 	box-sizing: border-box;
 }
+
+
 
 main {
 	font-family: "Space Mono", monospace;
@@ -11,35 +20,10 @@ main {
 }
 
 div {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	padding: 0.25%;
 }
 
-ol {
-	background: #ff9999;
-	padding: 20px;
-}
-
-ul {
-	background: #3399ff;
-	list-style-type: none;
-	padding: 5px;
-	margin: 0;
-}
-
-ol li {
-	background: #ffe5e5;
-	padding: 5px;
-	margin-left: 35px;
-}
-
-ul li {
-	background: #cce5ff;
-	margin: 5px;
-}
-
-#searchID {
+/* #searchID {
 	background-image: url('https://cdn.jsdelivr.net/npm/twemoji@11.0.1/2/svg/2757.svg');
 	background-size: contain;
 	background-color: white;
@@ -57,38 +41,13 @@ ul li {
 	padding: 12px 20px 12px 40px;
 	border: 1px solid #ddd;
 	margin-bottom: 12px;
-}
-
-ul li a {
-	border: 1px solid #ddd;
-	margin-top: -1px;
-	/* Prevent double borders */
-	background-color: #f6f6f6;
-	padding: 12px;
-	text-decoration: none;
-	font-size: 18px;
-	color: black;
-	display: block
-}
-
-ul li a:hover:not(.header) {
-	background-color: #eee;
-}
-
-h1 {
-	text-align: center;
-	color: #3399ff;
-}
-
-a {
-	text-decoration: none;
-}
+} */
 
 #logo {
 	font-family: "Source Serif Pro", serif;
 	font-family: "Space Mono", monospace;
 	font-weight: lighter;
-	background-color: rgba(255, 255, 255, 0.145);
+	background-color: rgb(172, 172, 172);
 	font-size: 250%;
 }
 
@@ -109,4 +68,51 @@ a {
 #logo a:active {
 	color: rgb(0, 0, 0);
 	background-color: white;
+}
+
+.box {
+	position: relative;
+	/* top: 50%;
+	left: 50%; */
+	/* transform: translate(-50%, -50%); */
+}
+
+.box select {
+	background-color: black;
+	font-weight: bold;
+	color: white;
+	padding: 0.5%;
+	width: 125px;
+	border: none;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+	-webkit-appearance: button;
+	appearance: button;
+	outline: none;
+}
+
+.box::before {
+	content: "\f13a";
+	font-family: FontAwesome;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 20%;
+	height: 100%;
+	text-align: center;
+	font-size: 28px;
+	line-height: 45px;
+	color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 0.1);
+	pointer-events: none;
+}
+
+.box:hover::before {
+	color: rgba(255, 255, 255, 0.6);
+	background-color: rgba(255, 255, 255, 0.2);
+	font-weight: bold;
+}
+
+.box select option {
+	padding: 30px;
+	font-weight: bold;
 }

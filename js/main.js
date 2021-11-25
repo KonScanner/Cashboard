@@ -1,50 +1,19 @@
 const supported_symbols = new Set(["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"])
 const supported_times = new Set(["5", "15", "30", "1D", "D"])
 
-
 var opts = {
 	series: [],
 	title: {
 		text: "Price of asset vs Time",
 	},
 	chart: {
-		height: 350,
-		type: 'area',
-	},
-	chart: {
-		// id: 'datetime',
 		type: 'candlestick',
 		height: 350,
+		width: "50%",
 		zoom: {
 			autoScaleYaxis: true
 		},
 		redrawOnParentResize: true
-	},
-	annotations: {
-		// yaxis: [{
-		// 	y: 30,
-		// 	borderColor: '#999',
-		// 	label: {
-		// 		show: true,
-		// 		text: 'Support',
-		// 		style: {
-		// 			color: "#fff",
-		// 			background: '#00E396'
-		// 		}
-		// 	}
-		// }],
-		xaxis: [{
-			borderColor: '#999',
-			yAxisIndex: 0,
-			// label: {
-			// 	show: true,
-			// 	text: 'Rally',
-			// 	style: {
-			// 		color: "#fff",
-			// 		background: '#775DD0'
-			// 	}
-			// }
-		}]
 	},
 	dataLabels: {
 		enabled: false
@@ -55,38 +24,33 @@ var opts = {
 	},
 	xaxis: {
 		type: 'datetime',
-		tickAmount: 6,
+		tickAmount: 10,
 	},
 	yaxis: {
-		// min: 0,
 		forceNiceScale: true,
 		decimalsInFloat: 2,
+		lines: {
+			show: true
+		},
+		opposite: false,
+		tickAmount: 10,
+		labels: {
+			offsetX: 0,
+			rotate: 0,
+		}
+
 	},
 	tooltip: {
 		x: {
 			format: 'hh:mm - dd MMM yyyy'
 		}
 	},
-	// fill: {
-	// 	type: 'gradient',
-	// 	gradient: {
-	// 		shadeIntensity: 1,
-	// 		opacityFrom: 0.7,
-	// 		opacityTo: 0.9,
-	// 		stops: [0, 100]
-	// 	}
-	// },,
 	grid: {
 		show: true,
 		borderColor: '#90A4AE',
 		strokeDashArray: 0,
 		position: 'back',
 		xaxis: {
-			lines: {
-				show: true
-			}
-		},
-		yaxis: {
 			lines: {
 				show: true
 			}
@@ -103,7 +67,7 @@ var opts = {
 			top: 0,
 			right: 0,
 			bottom: 0,
-			left: 0
+			left: 0,
 		},
 	},
 
@@ -115,7 +79,6 @@ var opts = {
 		offsetY: 0,
 		style: {
 			color: "black",
-			fontSize: '20px',
 			fontFamily: undefined
 		}
 	},
@@ -125,7 +88,7 @@ var opts = {
 				useFillColor: true,
 			}
 		}
-	}
+	},
 }
 
 var chart = new ApexCharts(
@@ -137,16 +100,6 @@ chart.render();
 function subtractMinutes(date, minutes) {
 	return new Date(date - minutes * 60000);
 }
-
-// document.addEventListener('input', function (event) {
-// 	if (event.target.id !== 'dropDownSymbol') {
-// 		return;
-// 	}
-// 	if (event.target.id === 'dropDownSymbol') {
-// 		return event.target.value;
-// 		// get_data_with_symbol(symbol = event.target.value, time = "1D");
-// 	}
-// }, false);
 
 
 function get_symbol(event) {
@@ -200,7 +153,7 @@ function deal_with_time(time = "", symbol = "") {
 		if (symbol === "AVAX_USDT") {
 			return get_conception_date(symbol)
 		}
-		return date_to_unix(subtractMinutes(date = today, minutes = 1051202).getTime()); // 18 months
+		return date_to_unix(subtractMinutes(date = today, minutes = 3153604).getTime()); // 18 months
 	}
 	if (time === "1D") {
 		if (symbol === "AVAX_USDT") {
@@ -208,6 +161,9 @@ function deal_with_time(time = "", symbol = "") {
 		}
 		return date_to_unix(subtractMinutes(date = today, minutes = 788401).getTime()); // 18 months
 
+	}
+	if (time === "60") {
+		return date_to_unix(subtractMinutes(date = today, minutes = 28800).getTime()); // 10 days
 	}
 	if (time === "30") {
 		return date_to_unix(subtractMinutes(date = today, minutes = 14400).getTime()); // 10 days
@@ -218,6 +174,9 @@ function deal_with_time(time = "", symbol = "") {
 	}
 	if (time === "5") {
 		return date_to_unix(subtractMinutes(date = today, minutes = 1440).getTime()); // 1 day
+	}
+	if (time === "1") {
+		return date_to_unix(subtractMinutes(date = today, minutes = 144).getTime()); // 1 day
 	} else {
 		alert("Something Went Wrong")
 	}
@@ -225,7 +184,7 @@ function deal_with_time(time = "", symbol = "") {
 
 }
 
-window.addEventListener('input', get_symbol, false);
+
 
 
 function get_chart(data, symbol, min_date, max_date) {
@@ -247,14 +206,8 @@ function get_chart(data, symbol, min_date, max_date) {
 			},
 			redrawOnParentResize: true
 		},
-		annotations: {
-
-			xaxis: [{
-				max: max_date,
-			}]
-
-		},
 		xaxis: {
+			max: max_date,
 			min: min_date
 		}
 	};
@@ -344,3 +297,19 @@ function get_data_decrypt(per_page) {
 // 		li[i].style.display = "none";
 // 	}
 // }
+
+// var target = document.querySelector("#dropDownSymbol");
+
+// target.addEventListener("mouseover", mOver, false);
+// target.addEventListener("mouseout", mOut, false);
+
+
+// function mOver() {
+// 	target.click();
+// }
+
+// function mOut() {
+// 	target.setAttribute("style", "background-color:green;")
+// }
+
+window.addEventListener('input', get_symbol, false);

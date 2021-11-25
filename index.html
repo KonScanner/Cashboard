@@ -6,45 +6,69 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script name="css/main.css"></script>
-	<script name="css/external.css"></script>
+	<link rel="stylesheet" type="text/css" href="css/external.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!-- <script rel="css/external.css"></script> -->
+	<!-- <script rel="css/main.css"></script> -->
+
 	<title>Cashboard</title>
 </head>
 
 <body>
-	<div id="container4">
-		<h1 id="logo"><a href="">Cashboard</a></h1>
-		<!-- <input type="text" id="searchID" onkeyup="searchFunction(this)" placeholder="Type Symbol"> -->
-		<label for="dropDownSymbol">Preset Symbols: </label>
-		<select id="dropDownSymbol">
-			<option value="BTC_USDT">BTC</option>
-			<option value="ETH_USDT">ETH</option>
-			<option value="ADA_USDT">ADA</option>
-			<option value="AVAX_USDT">AVAX</option>
-		</select>
-		<input type="text" id="HiddenSymbol" hidden=True value="">
+	<h1 id="logo"><a href="">Cashboard</a></h1>
+	<div>
+		<div class="box">
+			<!-- <input type="text" id="searchID" onkeyup="searchFunction(this)" placeholder="Type Symbol"> -->
+			<label for="dropDownSymbol">Presets: </label>
+			<select id="dropDownSymbol">
+				<option value="BTC_USDT">BTC</option>
+				<option value="ETH_USDT">ETH</option>
+				<option value="ADA_USDT">ADA</option>
+				<option value="AVAX_USDT">AVAX</option>
+				<option value="SOL_USDT">SOL</option>
+				<option value="XRP_USDT">XRP</option>
+				<option value="DOT_USDT">DOT</option>
+				<option value="CRO_USDT">CRO</option>
+				<option value="MATIC_USDT">MATIC</option>
+				<option value="AAVE_USDT">AAVE</option>
+				<option value="CRV_USDT">CRV</option>
+				<option value="LINK_USDT">LINK</option>
+				<option value="ATOM_USDT">ATOM</option>
+				<option value="UNI_USDT">UNI</option>
+				<option value="ALGO_USDT">ALGO</option>
+				<!-- <option value="XMR_USDT">XMR</option> -->
+				<option value="AXS_USDT">AXS</option>
+				<option value="BCH_USDT">BCH</option>
+				<option value="MANA_USDT">MANA</option>
+				<option value="SAND_USDT">SAND</option>
+				<option value="NEAR_USDT">NEAR</option>
+				<option value="ENJ_USDT">ENJ</option>
+				<!-- <option value="FTM_USDT">FTM</option> -->
+				<option value="USDC_USDT">USDC</option>
+				<option value="ETC_USDT">ETC</option>
+				<option value="DOGE_USDT">DOGE</option>
+				<option value="SHIB_USDT">SHIB</option>
+			</select>
+			<input type="text" id="HiddenSymbol" hidden=True value="">
 
-		<br>
-		<br>
-		<label for="dropDownTime">Preset Symbols: </label>
-		<select id="dropDownTime">
-			<option value="D">1 Week</option>
-			<option value="1D">1 Day</option>
-			<option value="30">30 min</option>
-			<option value="15">15 min</option>
-			<option value="5">5 min</option>
-		</select>
-		<input type="text" id="HiddenTime" hidden=True value="">
+			<!-- <label for="dropDownTime">Preset Symbols: </label> -->
+			<select id="dropDownTime">
+				<option value="D">1 week</option>
+				<option value="1D">1 day</option>
+				<option value="30">60 min</option>
+				<option value="30">30 min</option>
+				<option value="15">15 min</option>
+				<option value="5">5 min</option>
+				<option value="1">1 min</option>
+			</select>
+			<input type="text" id="HiddenTime" hidden=True value="">
+		</div>
 	</div>
-	<div id="resp"></div>
+	<div>
+		<div id="chart">
+		</div>
+	</div>
 
-	<!-- <div>
-		<h3>Fear &amp; Greed Over Time</h3>
-		<div id="feargreedOverTime"
-			style="background-image:url('http://markets.money.cnn.com/Marketsdata/Api/Chart/FearGreedHistoricalImage?chartType=AvgPtileModel');">
-			&nbsp;</div>
-	</div> -->
-	<div id="chart" style="min-height: 365px;"></div>
 	<div>
 		Useful links
 		<ul>
@@ -53,7 +77,6 @@
 		</ul>
 	</div>
 
-	</div>
 	<!-- <div id="needleChart"
 		style="background-image:url('http://markets.money.cnn.com/Marketsdata/uploadhandler/z6f8f7c0az160623bce4254db0b3fe25a0028a0def.png');">
 		<ul>
