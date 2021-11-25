@@ -12,8 +12,8 @@ var opts = {
 		type: 'area',
 	},
 	chart: {
-		id: 'area-datetime',
-		type: 'area',
+		// id: 'datetime',
+		type: 'candlestick',
 		height: 350,
 		zoom: {
 			autoScaleYaxis: true
@@ -36,14 +36,14 @@ var opts = {
 		xaxis: [{
 			borderColor: '#999',
 			yAxisIndex: 0,
-			label: {
-				show: true,
-				text: 'Rally',
-				style: {
-					color: "#fff",
-					background: '#775DD0'
-				}
-			}
+			// label: {
+			// 	show: true,
+			// 	text: 'Rally',
+			// 	style: {
+			// 		color: "#fff",
+			// 		background: '#775DD0'
+			// 	}
+			// }
 		}]
 	},
 	dataLabels: {
@@ -58,24 +58,55 @@ var opts = {
 		tickAmount: 6,
 	},
 	yaxis: {
-		min: 0,
+		// min: 0,
 		forceNiceScale: true,
 		decimalsInFloat: 2,
 	},
 	tooltip: {
 		x: {
-			format: 'dd MMM yyyy'
+			format: 'hh:mm - dd MMM yyyy'
 		}
 	},
-	fill: {
-		type: 'gradient',
-		gradient: {
-			shadeIntensity: 1,
-			opacityFrom: 0.7,
-			opacityTo: 0.9,
-			stops: [0, 100]
-		}
+	// fill: {
+	// 	type: 'gradient',
+	// 	gradient: {
+	// 		shadeIntensity: 1,
+	// 		opacityFrom: 0.7,
+	// 		opacityTo: 0.9,
+	// 		stops: [0, 100]
+	// 	}
+	// },,
+	grid: {
+		show: true,
+		borderColor: '#90A4AE',
+		strokeDashArray: 0,
+		position: 'back',
+		xaxis: {
+			lines: {
+				show: true
+			}
+		},
+		yaxis: {
+			lines: {
+				show: true
+			}
+		},
+		row: {
+			colors: undefined,
+			opacity: 0.9
+		},
+		column: {
+			colors: undefined,
+			opacity: 0.9
+		},
+		padding: {
+			top: 0,
+			right: 0,
+			bottom: 0,
+			left: 0
+		},
 	},
+
 	noData: {
 		text: "Loading...",
 		align: 'center',
@@ -86,6 +117,13 @@ var opts = {
 			color: "black",
 			fontSize: '20px',
 			fontFamily: undefined
+		}
+	},
+	plotOptions: {
+		candlestick: {
+			wick: {
+				useFillColor: true,
+			}
 		}
 	}
 }
@@ -118,16 +156,15 @@ function get_symbol(event) {
 	}
 	if (event.target.id === 'dropDownSymbol') {
 		document.getElementById("HiddenSymbol").value = event.target.value;
-		console.log('Symbol:', document.getElementById("HiddenSymbol").value);
 	}
 	if (event.target.id === 'dropDownTime') {
 		document.getElementById("HiddenTime").value = event.target.value;
-		console.log('Time:', document.getElementById("HiddenTime").value);
 	}
 	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
+		let symbol = document.getElementById("HiddenSymbol").value;
 		let time = document.getElementById("HiddenTime").value;
 		let to = String(date_to_unix(get_today()))
-		let from = String(deal_with_time(time));
+		let from = String(deal_with_time(time = time, symbol = symbol));
 		console.log("to", to, "from", from);
 
 		get_data_with_symbol(symbol = document.getElementById("HiddenSymbol").value, time = document.getElementById("HiddenTime").value, from = from, to = to);
@@ -142,16 +179,33 @@ function date_to_unix(date) {
 	return Math.floor(date / 1000)
 }
 
-function deal_with_time(time = "") {
+function get_conception_date(symbol = "") {
+
+	if (symbol === "AVAX_USDT") {
+		const avax_date = new Date('2021-01-21').valueOf()
+		return date_to_unix(avax_date);
+	}
+
+}
+
+function deal_with_time(time = "", symbol = "") {
 	// Makes sure the API is only fetched for the appropriate time ranges that are useful
 	let today = get_today()
+
+
 	if (time === "") {
 		return;
 	}
 	if (time === "D") {
+		if (symbol === "AVAX_USDT") {
+			return get_conception_date(symbol)
+		}
 		return date_to_unix(subtractMinutes(date = today, minutes = 1051202).getTime()); // 18 months
 	}
 	if (time === "1D") {
+		if (symbol === "AVAX_USDT") {
+			return get_conception_date(symbol)
+		}
 		return date_to_unix(subtractMinutes(date = today, minutes = 788401).getTime()); // 18 months
 
 	}
@@ -168,6 +222,7 @@ function deal_with_time(time = "") {
 		alert("Something Went Wrong")
 	}
 	return;
+
 }
 
 window.addEventListener('input', get_symbol, false);
@@ -184,8 +239,8 @@ function get_chart(data, symbol, min_date, max_date) {
 			},
 		}],
 		chart: {
-			id: 'area-datetime',
-			type: 'area',
+			// id: 'area-datetime',
+			type: 'candlestick',
 			height: 350,
 			zoom: {
 				autoScaleYaxis: true
@@ -221,7 +276,7 @@ function prepare_data(data) {
 
 	let plot_ = []
 	for (let i = 0; i < data.o.length; i++) {
-		let c_p = (data.o[i] + data.c[i] + data.h[i] + data.l[i]) / 4;
+		let c_p = [data.o[i], data.h[i], data.l[i], data.c[i]]
 		plot_.push([dates[i], c_p])
 	}
 	return plot_;
