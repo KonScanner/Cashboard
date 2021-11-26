@@ -1,6 +1,9 @@
-const supported_symbols = new Set(["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"])
-const supported_times = new Set(["5", "15", "30", "1D", "D"])
+const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"]
+const supported_times = ["1", "5", "15", "30", "60", "4h", "8h", "1D", "D"]
 
+/**
+ * Charts & chart functions
+ */
 var opts = {
 	series: [],
 	title: {
@@ -97,96 +100,6 @@ var chart = new ApexCharts(
 );
 chart.render();
 
-function subtractMinutes(date, minutes) {
-	return new Date(date - minutes * 60000);
-}
-
-
-function get_symbol(event) {
-	// Gets symbol and time and places them into a hidden input field
-	if (event.target.id !== 'dropDownSymbol' & event.target.id !== 'dropDownTime') {
-		return null;
-	}
-	if (event.target.id === 'dropDownSymbol') {
-		document.getElementById("HiddenSymbol").value = event.target.value;
-	}
-	if (event.target.id === 'dropDownTime') {
-		document.getElementById("HiddenTime").value = event.target.value;
-	}
-	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
-		let symbol = document.getElementById("HiddenSymbol").value;
-		let time = document.getElementById("HiddenTime").value;
-		let to = String(date_to_unix(get_today()))
-		let from = String(deal_with_time(time = time, symbol = symbol));
-		console.log("to", to, "from", from);
-
-		get_data_with_symbol(symbol = document.getElementById("HiddenSymbol").value, time = document.getElementById("HiddenTime").value, from = from, to = to);
-	}
-}
-
-function get_today() {
-	return Date.now();
-}
-
-function date_to_unix(date) {
-	return Math.floor(date / 1000)
-}
-
-function get_conception_date(symbol = "") {
-
-	if (symbol === "AVAX_USDT") {
-		const avax_date = new Date('2021-01-21').valueOf()
-		return date_to_unix(avax_date);
-	}
-
-}
-
-function deal_with_time(time = "", symbol = "") {
-	// Makes sure the API is only fetched for the appropriate time ranges that are useful
-	let today = get_today()
-
-
-	if (time === "") {
-		return;
-	}
-	if (time === "D") {
-		if (symbol === "AVAX_USDT") {
-			return get_conception_date(symbol)
-		}
-		return date_to_unix(subtractMinutes(date = today, minutes = 3153604).getTime()); // 18 months
-	}
-	if (time === "1D") {
-		if (symbol === "AVAX_USDT") {
-			return get_conception_date(symbol)
-		}
-		return date_to_unix(subtractMinutes(date = today, minutes = 788401).getTime()); // 18 months
-
-	}
-	if (time === "60") {
-		return date_to_unix(subtractMinutes(date = today, minutes = 28800).getTime()); // 10 days
-	}
-	if (time === "30") {
-		return date_to_unix(subtractMinutes(date = today, minutes = 14400).getTime()); // 10 days
-	}
-	if (time === "15") {
-		return date_to_unix(subtractMinutes(date = today, minutes = 7200).getTime()); // 5 days
-
-	}
-	if (time === "5") {
-		return date_to_unix(subtractMinutes(date = today, minutes = 1440).getTime()); // 1 day
-	}
-	if (time === "1") {
-		return date_to_unix(subtractMinutes(date = today, minutes = 144).getTime()); // 1 day
-	} else {
-		alert("Something Went Wrong")
-	}
-	return;
-
-}
-
-
-
-
 function get_chart(data, symbol, min_date, max_date) {
 
 	var options = {
@@ -212,39 +125,179 @@ function get_chart(data, symbol, min_date, max_date) {
 		}
 	};
 
-	// let _chart = document.querySelector("#chart");
-	// debugger
-	// let chart = new ApexCharts(_chart, options);
-	// chart.render();
-	// chart.updateSeries([{
-	// 	name: `${symbol}`,
-	// 	data: data
-	// }], true);
 	chart.updateOptions(options);
 };
 
 
-function prepare_data(data) {
-	var dates = data.t.map(d => Math.floor(d * 1000));
 
-	let plot_ = []
-	for (let i = 0; i < data.o.length; i++) {
-		let c_p = [data.o[i], data.h[i], data.l[i], data.c[i]]
-		plot_.push([dates[i], c_p])
+function get_symbol(event) {
+	// Gets symbol and time and places them into a hidden input field
+	if (event.target.id !== 'dropDownSymbol' & event.target.id !== 'dropDownTime') {
+		return null;
 	}
-	return plot_;
+	if (event.target.id === 'dropDownSymbol') {
+		document.getElementById("HiddenSymbol").value = event.target.value;
+	}
+	if (event.target.id === 'dropDownTime') {
+		document.getElementById("HiddenTime").value = event.target.value;
+	}
+	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
+		let symbol = document.getElementById("HiddenSymbol").value;
+		let time = document.getElementById("HiddenTime").value;
+		let to = String(date_to_unix(get_today()))
+		let from = String(deal_with_time(time = time, symbol = symbol));
+		console.log("to", to, "from", from);
+
+		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
+	}
+}
+
+/**
+ *  TIME AND DATAPREP FUNCTIONS
+ */
+
+/**
+ * Time & time functions
+ */
+function get_today() {
+	return Date.now();
+}
+
+function date_to_unix(date) {
+	return Math.floor(date / 1000)
+}
+
+function subtractMinutes(date, minutes) {
+	return new Date(date - minutes * 60000);
 }
 
 
+function odd_times(time) {
+	if (time === "8h") {
+		return "60"
+	} else {
+		return time;
+	}
+}
+
+function get_conception_date(symbol = "") {
+
+	if (symbol === "AVAX_USDT") {
+		const avax_date = new Date('2020-05-21').valueOf()
+		return date_to_unix(avax_date);
+	}
+
+}
+
+function deal_with_time(time = "", symbol = "") {
+	// Makes sure the API is only fetched for the appropriate time ranges that are useful
+	let today = get_today()
+	if (supported_times.includes(time)) {
+
+		if (time === "") {
+			return;
+		}
+		if (time === "D") {
+			if (symbol === "AVAX_USDT") {
+				return get_conception_date(symbol)
+			}
+			return date_to_unix(subtractMinutes(date = today, minutes = 3153604).getTime()); // 18 months
+		}
+		if (time === "1D") {
+			if (symbol === "AVAX_USDT") {
+				return get_conception_date(symbol)
+			}
+			return date_to_unix(subtractMinutes(date = today, minutes = 788401).getTime()); // 18 months
+
+		}
+		if (time === "8h") {
+			return date_to_unix(subtractMinutes(date = today, minutes = 230400).getTime());
+		}
+		if (time === "4h") {
+			return date_to_unix(subtractMinutes(date = today, minutes = 115200).getTime());
+		}
+		if (time === "60") {
+			return date_to_unix(subtractMinutes(date = today, minutes = 28800).getTime()); // 10 days
+		}
+		if (time === "30") {
+			return date_to_unix(subtractMinutes(date = today, minutes = 14400).getTime()); // 10 days
+		}
+		if (time === "15") {
+			return date_to_unix(subtractMinutes(date = today, minutes = 7200).getTime()); // 5 days
+
+		}
+		if (time === "5") {
+			return date_to_unix(subtractMinutes(date = today, minutes = 1440).getTime()); // 1 day
+		}
+		if (time === "1") {
+			return date_to_unix(subtractMinutes(date = today, minutes = 144).getTime()); // 1 day
+		} else {
+			alert("Timeframe issue")
+		}
+	}
+	return;
+
+}
+
+
+/**
+ * Data prep functions
+ */
+
+function prepare_data(data, time) {
+	var dates = data.t.map(d => Math.floor(d * 1000));
+	if (time === "8h") {
+		return hour_average(dates = dates, data = data, hour_coeff = 8);
+
+	} else {
+		let plot_ = []
+		for (let i = 0; i < data.o.length; i++) {
+			let c_p = [data.o[i], data.h[i], data.l[i], data.c[i]]
+			plot_.push([dates[i], c_p])
+		}
+		return plot_;
+	}
+
+}
+
+function hour_average(dates, data, hour_coeff) {
+
+	let res = []
+	let o = 0;
+	let h = 0;
+	let l = 0;
+	let c = 0;
+	let t = 0;
+	for (let i = 0; i < data.o.length; i++) {
+		if (i % hour_coeff === 0 & i !== 0) {
+			res.push([t, [o / hour_coeff, h / hour_coeff, l / hour_coeff, c / hour_coeff]])
+			o = 0;
+			h = 0;
+			l = 0;
+			c = 0;
+			t = 0;
+		} else {
+			o += data.o[i]
+			h += data.h[i]
+			l += data.l[i]
+			c += data.c[i]
+			t = dates[i]
+		}
+	}
+	return res;
+
+}
+
 function get_data_with_symbol(symbol, time, from, to) {
 	// Fetches data, given symbol,time,from,to
-	console.log(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time}&from=${from}&to=${to}`)
+	let time_ = odd_times(time);
+	console.log(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time_}&from=${from}&to=${to}`)
 	console.log(Date(Math.floor(from * 1000)), Date(Math.floor(to * 1000)))
-	fetch(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time}&from=${from}&to=${to}`).then(function (response) {
+	fetch(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time_}&from=${from}&to=${to}`).then(function (response) {
 		// The API call was successful!
 		return response.json();
 	}).then(function (data) {
-		plot_ = prepare_data(data);
+		plot_ = prepare_data(data, time);
 		get_chart(dates = plot_, symbol = symbol, max_date = dates.max, min_date = dates.min)
 	}).catch(function (err) {
 		// There was an errr
@@ -252,64 +305,52 @@ function get_data_with_symbol(symbol, time, from, to) {
 	});
 }
 
-function get_data_decrypt(per_page) {
-	// Fetches data, given news per page
-	fetch(`https://api.decrypt.co/content-elasticsearch/posts?_minimal=true&category=news&lang=en-US&offset=0&order=desc&orderby=date&per_page=${per_page}`).then(function (response) {
+function coingecko_coin_data_pre(data) {
+	// document.getElementById("coin_image").src = data.image.thumb;
+	document.getElementById("coin_name").innerHTML = data.id;
+	document.getElementById("coin_marketcap_pct").innerHTML = "Marketcap % 24h : " + data.market_data.market_cap_change_percentage_24h + "%";
+	document.getElementById("coin_marketcap").innerHTML = "Marketcap 24h : " + data.market_data.market_cap_change_24h;
+}
+
+function coingecko_coin_fetch(coin) {
+	fetch(`https://api.coingecko.com/api/v3/coins/${coin}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=true&sparkline=false`).then(function (response) {
+		// The API call was successful!
 		return response.json();
 	}).then(function (data) {
-		// This is the JSON from the response
-		return data;
+		coingecko_coin_data_pre(data)
 	}).catch(function (err) {
+		// There was an errr
 		console.warn(`Error ${err}`);
 	});
 }
 
-// var xhr = new XMLHttpRequest();
-// xhr.withCredentials = true;
 
-// xhr.addEventListener("readystatechange", function () {
-// 	if (this.readyState === 4) {
-// 		console.log(this.responseText);
-// 	}
-// });
+function coingecko_marketcap(symbol) {
+	if (symbol === "BTC_USDT") {
+		return;
+	}
+	if (symbol === "ETH_USDT") {
+		return;
+	}
+	if (symbol === "ADA_USDT") {
+		return;
+	} else {
+		console.warn(`coingecko_marketcap(${symbol}) -  Not implemented yet`)
+	}
+}
 
-// xhr.open("GET", "https://pyinvesting.com/fear-and-greed/cash-data");
-
-// xhr.send();
-
-// function searchFunction(element) {
-// 	var input, filter, ul, li, a, i, txtValue;
-// 	input = document.getElementById("searchID");
-// 	filter = input.value.toUpperCase();
-// 	if (event.key == 'Enter') {
-// 		get_data_with_symbol(filter);
-// 	}
-
-
-// ul = document.getElementsByTagName("ul");
-// li = ul[0].getElementsByTagName("li");
-// for (i = 0; i < li.length; i++) {
-// 	a = li[i];
-// 	txtValue = a.textContent || a.innerText;
-// 	if (txtValue.toUpperCase().indexOf(filter) > -1) {
-// 		li[i].style.display = "";
-// 	} else {
-// 		li[i].style.display = "none";
-// 	}
+// function get_data_decrypt(per_page) {
+// 	// Fetches data, given news per page
+// 	fetch(`https://api.decrypt.co/content-elasticsearch/posts?_minimal=true&category=news&lang=en-US&offset=0&order=desc&orderby=date&per_page=${per_page}`).then(function (response) {
+// 		return response.json();
+// 	}).then(function (data) {
+// 		// This is the JSON from the response
+// 		return data;
+// 	}).catch(function (err) {
+// 		console.warn(`Error ${err}`);
+// 	});
 // }
 
-// var target = document.querySelector("#dropDownSymbol");
-
-// target.addEventListener("mouseover", mOver, false);
-// target.addEventListener("mouseout", mOut, false);
-
-
-// function mOver() {
-// 	target.click();
-// }
-
-// function mOut() {
-// 	target.setAttribute("style", "background-color:green;")
-// }
+coingecko_coin_fetch(coin = "ethereum");
 
 window.addEventListener('input', get_symbol, false);
