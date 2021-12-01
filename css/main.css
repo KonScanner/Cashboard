@@ -49,6 +49,7 @@ div {
 	font-weight: lighter;
 	background-color: rgb(172, 172, 172);
 	font-size: 250%;
+
 }
 
 #logo a:link {
@@ -115,4 +116,75 @@ div {
 .box select option {
 	padding: 30px;
 	font-weight: bold;
+}
+
+.float-container {
+	border: 1px solid #fff;
+	padding: 1%;
+}
+
+.float-child {
+	width: 50%;
+	float: left;
+	padding: 1%;
+	border-radius: 2%;
+	border: 1px solid gray;
+}
+
+.float-child2 {
+	width: 100%;
+	float: left;
+	padding: 1%;
+	text-align: center;
+	align-items: center;
+}
+
+hr {
+	margin: 2.5%;
+	color: gray;
+}
+
+img {
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
+	margin-right: 2.5%;
+	margin-left: 2.5%;
+	float: left;
+	width: 5%;
+}
+
+img:hover {
+	opacity: 0.4;
+}
+
+.marketcap_info {
+	text-align: center;
+}
+
+.inline li {
+	text-align: center;
+	display: inline;
+	float: center;
+	margin-right: 2%;
+	margin-left: 2%;
+	text-align: center;
+}
+
+a:link {
+	text-decoration: none;
+	color: black;
+}
+
+a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:active {
+	color: rgb(0, 0, 0);
+	background-color: lightgray;
 }

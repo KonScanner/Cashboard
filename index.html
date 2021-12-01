@@ -70,20 +70,13 @@
 		<div id="chart">
 		</div>
 	</div>
-	<div>
-		<img src="coin_image" alt="">
+	<!-- <div>
+		<img id="coin_image" src="" alt="">
 		<h2 id="coin_name"></h2>
 		<h3 id="coin_marketcap_pct"></h3>
 		<h3 id="coin_marketcap"></h3>
-	</div>
+	</div> -->
 
-	<div>
-		Useful links
-		<ul>
-			<li><a href="https://senatestockwatcher.com/">Senate Stock Watcher</a></li>
-			<li><a href="https://coinmarketcal.com/en/">Coin Market Cal</a></li>
-		</ul>
-	</div>
 
 	<!-- <div id="needleChart"
 		style="background-image:url('http://markets.money.cnn.com/Marketsdata/uploadhandler/z6f8f7c0az160623bce4254db0b3fe25a0028a0def.png');">
@@ -95,7 +88,87 @@
 			<li>Fear &amp; Greed 1 Year Ago: 88 (Extreme Greed)</li>
 		</ul>
 	</div> -->
+	<div class="float-container">
+		<h2 style="text-align: center;padding-bottom: 1%;"><u>Price & Marketcap 24h*</u></h2>
+		<div class="float-child">
+			<h3 style="margin-left: 10%;" class="marketcap_info"><u>Coins</u></h3>
+			<hr />
+			<a id="bitcoin_id" title=""><img id="bitcoin_image" src="" alt=""></a>
+			<h4 id="bitcoin_current_price" class="marketcap_info"></h4>
+			<h4 id="bitcoin_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="bitcoin_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<a id="ethereum_id" title=""><img id="ethereum_image" src="" alt=""></a>
+			<h4 id="ethereum_current_price" class="marketcap_info"></h4>
+			<h4 id="ethereum_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="ethereum_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<a id="matic-network_id" title=""><img id="matic-network_image" src="" alt=""></a>
+			<h4 id="matic-network_current_price" class="marketcap_info"></h4>
+			<h4 id="matic-network_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="matic-network_marketcap" class="marketcap_info"></h4>
+			<hr />
 
+			<a id="cardano_id" title=""><img id="cardano_image" src="" alt=""></a>
+			<h4 id="cardano_current_price" class="marketcap_info"></h4>
+			<h4 id="cardano_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="cardano_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<a id="curve-dao-token_id" title=""><img id="curve-dao-token_image" src="" alt=""></a>
+			<h4 id="curve-dao-token_current_price" class="marketcap_info"></h4>
+			<h4 id="curve-dao-token_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="curve-dao-token_marketcap" class="marketcap_info"></h4>
+			<hr />
+
+
+			<h5 style="text-align: right;">* updated on refresh</h5>
+		</div>
+
+		<div class="float-child">
+			<h3 class="marketcap_info"><u>Stables</u></h3>
+
+			<hr />
+			<a id="tether_id" title=""><img id="tether_image" src="" alt=""></a>
+			<h4 id="tether_current_price" class="marketcap_info"></h4>
+			<h4 id="tether_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="tether_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<a id="usd-coin_id" title=""><img id="usd-coin_image" src="" alt=""></a>
+			<h4 id="usd-coin_current_price" class="marketcap_info"></h4>
+			<h4 id="usd-coin_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="usd-coin_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<a id="dai_id" title=""><img id="dai_image" src="" alt=""></a>
+			<h4 id="dai_current_price" class="marketcap_info"></h4>
+			<h4 id="dai_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="dai_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<a id="terrausd_id" title=""><img id="terrausd_image" src="" alt=""></a>
+			<h4 id="terrausd_current_price" class="marketcap_info"></h4>
+			<h4 id="terrausd_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="terrausd_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<a id="tether-eurt_id" title=""><img id="tether-eurt_image" src="" alt=""></a>
+			<h4 id="tether-eurt_current_price" class="marketcap_info"></h4>
+			<h4 id="tether-eurt_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="tether-eurt_marketcap" class="marketcap_info"></h4>
+			<hr />
+			<h5 style="text-align: right;">* updated on refresh</h5>
+		</div>
+	</div>
+
+	<div class="float-container">
+		<h2 style="text-align: center;padding-top: 0.5%;"><u>Useful links:</u></h2>
+		<div class="float-child2">
+			<ul class="inline">
+				<li><a href="https://senatestockwatcher.com/">Senate Stock Watcher</a></li>
+				<li><a href="https://coinmarketcal.com/en/">Coin Market Cal</a></li>
+				<li><a href="https://cryptoquant.com/prochart/KelFWoPVmcWOy4V">ETH // OI + Funding</a></li>
+				<li><a href="https://trdr.io/console/eOzCLNsu">Bitcoin/Tether Advanced</a></li>
+
+			</ul>
+		</div>
+	</div>
 </body>
 <script src="js/main.js"></script>
 

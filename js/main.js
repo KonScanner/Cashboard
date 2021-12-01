@@ -1,6 +1,5 @@
 const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"]
 const supported_times = ["1", "5", "15", "30", "60", "4h", "8h", "1D", "D"]
-
 /**
  * Charts & chart functions
  */
@@ -239,6 +238,18 @@ function deal_with_time(time = "", symbol = "") {
 
 }
 
+/**
+ * UTILS
+ */
+
+function check_nill(string) {
+	if (string === undefined) {
+		return 404;
+	} else {
+		return string;
+	}
+}
+
 
 /**
  * Data prep functions
@@ -305,11 +316,17 @@ function get_data_with_symbol(symbol, time, from, to) {
 	});
 }
 
-function coingecko_coin_data_pre(data) {
-	// document.getElementById("coin_image").src = data.image.thumb;
-	document.getElementById("coin_name").innerHTML = data.id;
-	document.getElementById("coin_marketcap_pct").innerHTML = "Marketcap % 24h : " + data.market_data.market_cap_change_percentage_24h + "%";
-	document.getElementById("coin_marketcap").innerHTML = "Marketcap 24h : " + data.market_data.market_cap_change_24h;
+function coingecko_coin_data_pre(data, coin = "eth") {
+	if (coin === "tether" | coin === "terrausd" | coin === "usd-coin" | coin === "dai" | coin === "tether-eurt") {
+		document.getElementById(`${coin}_current_price`).innerHTML = check_nill(data.market_data.current_price.usd.toFixed(4) + " $");
+	} else {
+		document.getElementById(`${coin}_current_price`).innerHTML = check_nill(data.market_data.current_price.usd.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
+	}
+	document.getElementById(`${coin}_image`).src = check_nill(data.image.large);
+	document.getElementById(`${coin}_id`).title = check_nill(data.id);
+
+	document.getElementById(`${coin}_marketcap_pct`).innerHTML = check_nill(data.market_data.market_cap_change_percentage_24h.toFixed(2) + " %");
+	document.getElementById(`${coin}_marketcap`).innerHTML = check_nill(data.market_data.market_cap_change_24h.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
 }
 
 function coingecko_coin_fetch(coin) {
@@ -317,7 +334,7 @@ function coingecko_coin_fetch(coin) {
 		// The API call was successful!
 		return response.json();
 	}).then(function (data) {
-		coingecko_coin_data_pre(data)
+		coingecko_coin_data_pre(data, coin = coin)
 	}).catch(function (err) {
 		// There was an errr
 		console.warn(`Error ${err}`);
@@ -351,6 +368,20 @@ function coingecko_marketcap(symbol) {
 // 	});
 // }
 
-coingecko_coin_fetch(coin = "ethereum");
+function coins_to_fetch() {
+	const coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token"];
+	const stables = ["tether", "usd-coin", "dai", "terrausd", "tether-eurt"];
+	// Coins
+	for (let i = 0; i < coins.length; i++) {
+		coingecko_coin_fetch(coin = coins[i]);
+	}
+
+	// Stables
+	for (let i = 0; i < stables.length; i++) {
+		coingecko_coin_fetch(coin = stables[i]);
+	}
+}
+
+coins_to_fetch();
 
 window.addEventListener('input', get_symbol, false);
