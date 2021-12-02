@@ -326,7 +326,7 @@ function coingecko_coin_data_pre(data, coin = "eth") {
 	document.getElementById(`${coin}_id`).title = check_nill(data.id);
 
 	document.getElementById(`${coin}_marketcap_pct`).innerHTML = check_nill(data.market_data.market_cap_change_percentage_24h.toFixed(2) + " %");
-	document.getElementById(`${coin}_marketcap`).innerHTML = check_nill(data.market_data.market_cap_change_24h.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
+	document.getElementById(`${coin}_marketcap`).innerHTML = check_nill(data.market_data.market_cap_change_24h.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
 }
 
 function coingecko_coin_fetch(coin) {
@@ -356,6 +356,24 @@ function coingecko_marketcap(symbol) {
 	}
 }
 
+// function get_aave_tvl() {
+// 	fetch(`https://aave-api-v2.aave.com/data/tvl`).then(function (response) {
+// 		// The API call was successful!
+// 		return response.json();
+// 	}).then(function (data) {
+// 		display_aave_tvl(data)
+// 	}).catch(function (err) {
+// 		// There was an errr
+// 		console.warn(`Error ${err}`);
+// 	});
+// }
+
+// function display_aave_tvl(data) {
+// 	document.getElementById('aave_id').title = "aave";
+// 	document.getElementById('aave_tvl').innerHTML = "<code>Current: </code>" + check_nill(Number(data.totalTvl.tvlInUsd).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
+// 	document.getElementById('aave_tvl').innerHTML = "<code>Current: </code>" + check_nill(Number(data.totalTvl.tvlInUsd).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
+// }
+
 // function get_data_decrypt(per_page) {
 // 	// Fetches data, given news per page
 // 	fetch(`https://api.decrypt.co/content-elasticsearch/posts?_minimal=true&category=news&lang=en-US&offset=0&order=desc&orderby=date&per_page=${per_page}`).then(function (response) {
@@ -383,5 +401,6 @@ function coins_to_fetch() {
 }
 
 coins_to_fetch();
+get_aave_tvl();
 
 window.addEventListener('input', get_symbol, false);
