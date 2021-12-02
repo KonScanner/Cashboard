@@ -401,6 +401,6 @@ function coins_to_fetch() {
 }
 
 coins_to_fetch();
-get_aave_tvl();
+// get_aave_tvl();
 
 window.addEventListener('input', get_symbol, false);
