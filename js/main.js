@@ -1,5 +1,7 @@
 const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"]
 const supported_times = ["1", "5", "15", "30", "60", "4h", "8h", "1D", "D"]
+const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "fantom", "olympus"];
+const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "tether-eurt", "magic-internet-money", "frax", "seur", "stasis-eurs"];
 /**
  * Charts & chart functions
  */
@@ -317,7 +319,8 @@ function get_data_with_symbol(symbol, time, from, to) {
 }
 
 function coingecko_coin_data_pre(data, coin = "eth") {
-	if (coin === "tether" | coin === "terrausd" | coin === "usd-coin" | coin === "dai" | coin === "tether-eurt") {
+	// if (coin === "tether" | coin === "terrausd" | coin === "usd-coin" | coin === "dai" | coin === "tether-eurt") {
+	if (in_array(array = supported_coins, string = coin)) {
 		document.getElementById(`${coin}_current_price`).innerHTML = check_nill(data.market_data.current_price.usd.toFixed(4) + " $");
 	} else {
 		document.getElementById(`${coin}_current_price`).innerHTML = check_nill(data.market_data.current_price.usd.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
@@ -327,6 +330,7 @@ function coingecko_coin_data_pre(data, coin = "eth") {
 
 	document.getElementById(`${coin}_marketcap_pct`).innerHTML = check_nill(data.market_data.market_cap_change_percentage_24h.toFixed(2) + " %");
 	document.getElementById(`${coin}_marketcap`).innerHTML = check_nill(data.market_data.market_cap_change_24h.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
+	document.getElementById(`${coin}_total_volume`).innerHTML = check_nill(data.market_data.total_volume.usd.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
 }
 
 function coingecko_coin_fetch(coin) {
@@ -386,17 +390,41 @@ function coingecko_marketcap(symbol) {
 // 	});
 // }
 
+function in_array(array, string) {
+	if (array.indexOf(string) > -1) {
+		return false
+	} else {
+		return true
+	}
+}
+
+function coins_to_create_html(coin, element = "coins") {
+	var mydiv = document.getElementById(element);
+	var newElement = document.createElement('div');
+
+	var str = '<hr />'
+	str += `<a id=${coin}_id title=""><img id="${coin}_image" src="" alt=""></a>
+			<h4 id="${coin}_current_price" class="marketcap_info"></h4>
+			<h4 id="${coin}_marketcap_pct" class="marketcap_info"></h4>
+			<h4 id="${coin}_marketcap" class="marketcap_info"></h4>
+			<h4 id="${coin}_total_volume" class="marketcap_info"></h4>`
+	newElement.innerHTML = str;
+	mydiv.appendChild(newElement);
+
+}
+
 function coins_to_fetch() {
-	const coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token"];
-	const stables = ["tether", "usd-coin", "dai", "terrausd", "tether-eurt"];
+
 	// Coins
-	for (let i = 0; i < coins.length; i++) {
-		coingecko_coin_fetch(coin = coins[i]);
+	for (let i = 0; i < supported_coins.length; i++) {
+		coins_to_create_html(coin = supported_coins[i]);
+		coingecko_coin_fetch(coin = supported_coins[i]);
 	}
 
 	// Stables
-	for (let i = 0; i < stables.length; i++) {
-		coingecko_coin_fetch(coin = stables[i]);
+	for (let i = 0; i < supported_stables.length; i++) {
+		coins_to_create_html(coin = supported_stables[i], element = "stables")
+		coingecko_coin_fetch(coin = supported_stables[i]);
 	}
 }
 
