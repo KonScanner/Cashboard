@@ -1,4 +1,4 @@
-const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT"]
+const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT", "SOL_USDT", "XRP_USDT", "DOT_USDT", "CRO_USDT", "MATIC_USDT", "AAVE_USDT", "CRV_USDT", "LINK_USDT", "ATOM_USDT", "UNI_USDT", "ALGO_USDT", "AXS_USDT", "BCH_USDT", "MANA_USDT", "SAND_USDT", "NEAR_USDT", "ENJ_USDT", "ETC_USDT", "ALICE_USDT", "DOGE_USDT", "SHIB_USDT", "1INCH_USDT", "AURORA_USDT"].sort();
 const supported_times = ["1", "5", "15", "30", "60", "4h", "8h", "1D", "D"]
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "fantom", "olympus"];
 const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "tether-eurt", "magic-internet-money", "frax", "seur", "stasis-eurs"];
@@ -129,7 +129,25 @@ function get_chart(data, symbol, min_date, max_date) {
 	chart.updateOptions(options);
 };
 
+function display_symbol_options_html() {
+	var mydiv = document.getElementById("dropDownSymbol");
+	var newElement = document.createElement('div');
+	var str = ''
+	for (let i = 0; i < supported_symbols.length; i++) {
+		let coin = supported_symbols[i].match(/[0-9A-Z]+/g)[0];
+		console.log(coin, supported_symbols[i])
+		let option = document.createElement("option");
+		option.text = coin;
+		option.value = supported_symbols[i];
+		let select = document.getElementById("dropDownSymbol");
+		select.appendChild(option);
+	}
 
+	newElement.innerHTML = str;
+	mydiv.appendChild(newElement);
+
+
+}
 
 function get_symbol(event) {
 	// Gets symbol and time and places them into a hidden input field
@@ -327,6 +345,9 @@ function coingecko_coin_data_pre(data, coin = "eth") {
 	}
 	document.getElementById(`${coin}_image`).src = check_nill(data.image.large);
 	document.getElementById(`${coin}_id`).title = check_nill(data.id);
+	var link = document.getElementById(`${coin}_id`)
+	link.setAttribute('href', check_nill(data.links.homepage[0]));
+
 
 	document.getElementById(`${coin}_marketcap_pct`).innerHTML = check_nill(data.market_data.market_cap_change_percentage_24h.toFixed(2) + " %");
 	document.getElementById(`${coin}_marketcap`).innerHTML = check_nill(data.market_data.market_cap_change_24h.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
@@ -360,36 +381,6 @@ function coingecko_marketcap(symbol) {
 	}
 }
 
-// function get_aave_tvl() {
-// 	fetch(`https://aave-api-v2.aave.com/data/tvl`).then(function (response) {
-// 		// The API call was successful!
-// 		return response.json();
-// 	}).then(function (data) {
-// 		display_aave_tvl(data)
-// 	}).catch(function (err) {
-// 		// There was an errr
-// 		console.warn(`Error ${err}`);
-// 	});
-// }
-
-// function display_aave_tvl(data) {
-// 	document.getElementById('aave_id').title = "aave";
-// 	document.getElementById('aave_tvl').innerHTML = "<code>Current: </code>" + check_nill(Number(data.totalTvl.tvlInUsd).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
-// 	document.getElementById('aave_tvl').innerHTML = "<code>Current: </code>" + check_nill(Number(data.totalTvl.tvlInUsd).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " $");
-// }
-
-// function get_data_decrypt(per_page) {
-// 	// Fetches data, given news per page
-// 	fetch(`https://api.decrypt.co/content-elasticsearch/posts?_minimal=true&category=news&lang=en-US&offset=0&order=desc&orderby=date&per_page=${per_page}`).then(function (response) {
-// 		return response.json();
-// 	}).then(function (data) {
-// 		// This is the JSON from the response
-// 		return data;
-// 	}).catch(function (err) {
-// 		console.warn(`Error ${err}`);
-// 	});
-// }
-
 function in_array(array, string) {
 	if (array.indexOf(string) > -1) {
 		return false
@@ -403,7 +394,7 @@ function coins_to_create_html(coin, element = "coins") {
 	var newElement = document.createElement('div');
 
 	var str = '<hr />'
-	str += `<a id=${coin}_id title=""><img id="${coin}_image" src="" alt=""></a>
+	str += `<a href="" id=${coin}_id title=""><img id="${coin}_image" src="" alt=""></a>
 			<h4 id="${coin}_current_price" class="marketcap_info"></h4>
 			<h4 id="${coin}_marketcap_pct" class="marketcap_info"></h4>
 			<h4 id="${coin}_marketcap" class="marketcap_info"></h4>
@@ -427,7 +418,7 @@ function coins_to_fetch() {
 		coingecko_coin_fetch(coin = supported_stables[i]);
 	}
 }
-
+display_symbol_options_html()
 coins_to_fetch();
 // get_aave_tvl();
 
