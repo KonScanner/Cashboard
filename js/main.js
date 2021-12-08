@@ -41,6 +41,9 @@ var opts = {
 		labels: {
 			offsetX: 0,
 			rotate: 0,
+		},
+		tooltip: {
+			enabled: true
 		}
 
 	},
