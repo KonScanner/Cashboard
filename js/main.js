@@ -2,14 +2,22 @@ const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT", "SOL
 const supported_times = ["1", "5", "15", "30", "60", "4h", "8h", "1D", "D"]
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "fantom", "olympus"];
 const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "tether-eurt", "magic-internet-money", "frax", "seur", "stasis-eurs"];
+let theme_toggler = document.querySelector('#theme_toggler');
+let graph = document.getElementById("chart");
 /**
  * Charts & chart functions
  */
 var opts = {
 	series: [],
-	title: {
-		text: "Price of asset vs Time",
-	},
+	// title: {
+	// 	text: "Price of asset vs Time",
+	// 	style: {
+	// 		fontSize: undefined,
+	// 		fontWeight: undefined,
+	// 		fontFamily: undefined,
+	// 		color: undefined
+	// 	},
+	// },
 	chart: {
 		type: 'candlestick',
 		height: 350,
@@ -29,6 +37,13 @@ var opts = {
 	xaxis: {
 		type: 'datetime',
 		tickAmount: 10,
+		labels: {
+			style: {
+				fontFamily: '"Space Mono", monospace',
+				fontWeight: undefined,
+				colors: "gray"
+			}
+		}
 	},
 	yaxis: {
 		forceNiceScale: true,
@@ -41,6 +56,11 @@ var opts = {
 		labels: {
 			offsetX: 0,
 			rotate: 0,
+			style: {
+				fontFamily: '"Space Mono", monospace',
+				fontWeight: undefined,
+				colors: "gray"
+			}
 		},
 		tooltip: {
 			enabled: true
@@ -49,8 +69,9 @@ var opts = {
 	},
 	tooltip: {
 		x: {
+			show: true,
 			format: 'hh:mm - dd MMM yyyy'
-		}
+		},
 	},
 	grid: {
 		show: true,
@@ -85,7 +106,6 @@ var opts = {
 		offsetX: 0,
 		offsetY: 0,
 		style: {
-			color: "black",
 			fontFamily: undefined
 		}
 	},
@@ -96,6 +116,9 @@ var opts = {
 			}
 		}
 	},
+	// theme: {
+	// 	mode: "dark"
+	// }
 }
 
 var chart = new ApexCharts(
@@ -138,7 +161,6 @@ function display_symbol_options_html() {
 	var str = ''
 	for (let i = 0; i < supported_symbols.length; i++) {
 		let coin = supported_symbols[i].match(/[0-9A-Z]+/g)[0];
-		console.log(coin, supported_symbols[i])
 		let option = document.createElement("option");
 		option.text = coin;
 		option.value = supported_symbols[i];
@@ -397,7 +419,7 @@ function coins_to_create_html(coin, element = "coins") {
 	var newElement = document.createElement('div');
 
 	var str = '<hr />'
-	str += `<a href="" id=${coin}_id title=""><img id="${coin}_image" src="" alt=""></a>
+	str += `<a href="" id=${coin}_id title=""><img id="${coin}_image" class="coin_image" src="" alt=""></a>
 			<h4 id="${coin}_current_price" class="marketcap_info"></h4>
 			<h4 id="${coin}_marketcap_pct" class="marketcap_info"></h4>
 			<h4 id="${coin}_marketcap" class="marketcap_info"></h4>
@@ -421,8 +443,14 @@ function coins_to_fetch() {
 		coingecko_coin_fetch(coin = supported_stables[i]);
 	}
 }
+
 display_symbol_options_html()
 coins_to_fetch();
-// get_aave_tvl();
+
+theme_toggler.addEventListener('click', function () {
+	document.body.classList.toggle('dark_mode');
+	// graph.style.backgroundColor = "#f5f5f5";
+	// graph.style.color = "#f5f5f5";
+});
 
 window.addEventListener('input', get_symbol, false);
