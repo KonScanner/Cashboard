@@ -56,13 +56,13 @@ body {
 .apexcharts-xaxis,
 .apexcharts-yaxistooltip-0,
 .apexcharts-xaxistooltip-0 {
-	background: var(--body-bg);
-	background-color: var(--body-bg);
-	color: var(--text-color);
-	font-family: var(--text-font);
-	font-weight: var(--text-weight);
-	font-size: var(--text-size);
-	font-size: 100%;
+	background: var(--body-bg) !important;
+	background-color: var(--body-bg) !important;
+	color: var(--text-color) !important;
+	font-family: var(--text-font) !important;
+	font-weight: var(--text-weight) !important;
+	font-size: var(--text-size) !important;
+	font-size: 100% !important;
 }
 
 #theme_toggler {

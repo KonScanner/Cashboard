@@ -12,15 +12,14 @@ var opts = {
 	// title: {
 	// 	text: "Price of asset vs Time",
 	// 	style: {
-	// 		fontSize: undefined,
+	// 		fontFamily: '"Space Mono", monospace',
 	// 		fontWeight: undefined,
-	// 		fontFamily: undefined,
-	// 		color: undefined
-	// 	},
+	// 		colors: "lightgray"
+	// 	}
 	// },
 	chart: {
 		type: 'candlestick',
-		height: 350,
+		height: 450,
 		width: "99%",
 		zoom: {
 			autoScaleYaxis: true
@@ -100,13 +99,15 @@ var opts = {
 	},
 
 	noData: {
-		text: "Loading...",
+		text: "Select Presets",
 		align: 'center',
 		verticalAlign: 'middle',
 		offsetX: 0,
 		offsetY: 0,
 		style: {
-			fontFamily: undefined
+			fontFamily: '"Space Mono", monospace',
+			fontWeight: undefined,
+			colors: "gray"
 		}
 	},
 	plotOptions: {
@@ -140,7 +141,6 @@ function get_chart(data, symbol, min_date, max_date) {
 		chart: {
 			// id: 'area-datetime',
 			type: 'candlestick',
-			height: 350,
 			zoom: {
 				autoScaleYaxis: true
 			},
