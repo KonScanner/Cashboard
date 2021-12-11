@@ -17,7 +17,7 @@
 		<h1 id="logo"><a href="">Cashboard</a></h1>
 		<div>
 			<div class="box">
-				<label for="dropDownSymbol">Presets: </label>
+				<label id="presets" for="dropDownSymbol">Presets: </label>
 				<select id="dropDownSymbol">
 				</select>
 				<input type="text" id="HiddenSymbol" hidden=True value="">
@@ -33,6 +33,12 @@
 					<option value="1">1 min</option>
 				</select>
 				<input type="text" id="HiddenTime" hidden=True value="D">
+
+				<button onclick="dropdownfunc()" class="dropbtn">Sections</button>
+				<div id="myDropdown" class="dropdown-content">
+					<a href="#useful_links_title">Links</a>
+					<a href="#main_title_center">24hr Values</a>
+				</div>
 				<span id="theme_toggler">
 					💡
 				</span>
@@ -58,7 +64,7 @@
 		</div>
 
 		<div class="float-container">
-			<h2 id="useful_links_title"><u>Useful links:</u></h2>
+			<h2 id="useful_links_title"><u>Useful inks:</u></h2>
 			<div class="float-child2">
 				<hr />
 				<ul class="inline">
@@ -71,6 +77,16 @@
 				</ul>
 				<hr />
 			</div>
+		</div>
+		<div>
+			<button onclick="topFunction()" id="myBtn" title="Go to top">Back to Top</button>
+		</div>
+
+		<div id="page-container">
+			<div id="content-wrap">
+				<p id="copyright" class="copyright-text"> </p>
+			</div>
+			<footer id="footer"></footer>
 		</div>
 	</main>
 	<!-- <h2 id="useful_links_title"><u>Powered By:</u></h2>
@@ -85,5 +101,6 @@
 
 </body>
 <script src="js/main.js"></script>
+<script src="js/window.js"></script>
 
 </html>

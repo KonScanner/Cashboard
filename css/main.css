@@ -3,7 +3,8 @@
 	--text-color: #252525;
 	--text-font: "Space Mono", monospace;
 	--text-weight: bold;
-	--text-size: 120%;
+	--text-size: 100%;
+	--width: 7.5%;
 }
 
 .dark_mode {
@@ -20,6 +21,7 @@ body {
 	margin: 0;
 	height: 100vh;
 	font-size: 100%;
+	vertical-align: baseline;
 }
 
 .apexcharts-canvas,
@@ -62,7 +64,6 @@ body {
 	font-family: var(--text-font) !important;
 	font-weight: var(--text-weight) !important;
 	font-size: var(--text-size) !important;
-	font-size: 100% !important;
 }
 
 #theme_toggler {
@@ -70,11 +71,10 @@ body {
 	/* background-color: black; */
 	float: right;
 	padding: 0.5%;
-	color: #fff;
+	color: var(--text-color);
 	cursor: pointer;
 	user-select: none;
 }
-
 
 html * {
 	padding: 0;
@@ -87,9 +87,9 @@ div {
 }
 
 #logo {
-	font-family: "Source Serif Pro", serif;
-	font-family: "Space Mono", monospace;
-	font-weight: lighter;
+	padding-left: 0.45%;
+	font-family: var(--text-font);
+	font-weight: bold;
 	background-color: rgb(172, 172, 172);
 	font-size: 250%;
 
@@ -97,12 +97,12 @@ div {
 
 #logo a:link {
 	text-decoration: none;
-	color: black;
+	color: var(--text-color);
 }
 
 #logo a:visited {
 	text-decoration: none;
-	color: black;
+	color: var(--text-color);
 }
 
 #logo a:hover {
@@ -110,8 +110,12 @@ div {
 }
 
 #logo a:active {
-	color: rgb(0, 0, 0);
-	background-color: white;
+	color: var(--text-color);
+	background-color: var(--body-bg);
+}
+
+#presets {
+	padding-left: 0.45%;
 }
 
 .box {
@@ -122,16 +126,22 @@ div {
 }
 
 .box select {
-	background-color: black;
+	background-color: var(--text-color);
 	font-weight: bold;
-	color: white;
+	text-align: center;
+	color: var(--body-bg);
 	padding: 0.5%;
-	width: 125px;
+	width: var(--width);
 	border: none;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	-webkit-appearance: button;
 	appearance: button;
 	outline: none;
+	appearance: none;
+	overflow-y: hidden !important;
+	font-family: var(--text-font);
+	font-size: var(--text-size);
+	font-weight: bold;
 }
 
 .box::before {
@@ -143,7 +153,7 @@ div {
 	width: 20%;
 	height: 100%;
 	text-align: center;
-	font-size: 28px;
+	font-size: var(--text-size);
 	line-height: 45px;
 	pointer-events: none;
 }
@@ -206,11 +216,12 @@ img:hover {
 	float: center;
 	margin-right: 2%;
 	margin-left: 2%;
-	font-size: 115%;
+	font-size: var(--text-size);
 	align-items: center;
 	justify-content: space-between;
 	min-height: 10vh;
 }
+
 
 a:link {
 	text-decoration: none;
@@ -227,8 +238,8 @@ a:hover {
 }
 
 a:active {
-	color: rgb(0, 0, 0);
-	background-color: lightgray;
+	color: var(--text-color);
+	background-color: gray;
 }
 
 
@@ -243,7 +254,7 @@ a:active {
 
 #updated_on_refresh {
 	text-align: right;
-	font-size: 75%;
+	font-size: var(--text-size);
 }
 
 #useful_links_title {
@@ -281,7 +292,182 @@ a:active {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	height: 5rem;
-	font-family: "Space Mono", monospace;
+	font-family: var(--text-font);
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
+}
+
+
+/* Dropdown Button */
+.dropbtn {
+	width: auto;
+	position: relative;
+	float: right;
+	padding-right: 0.5%;
+	cursor: pointer;
+	user-select: none;
+	z-index: 1;
+	outline: none;
+	background-color: var(--text-color);
+	color: var(--body-bg);
+	padding: 10px;
+	font-size: var(--text-size);
+	font-family: var(--text-font);
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	width: var(--width);
+	user-select: none;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dropbtn:hover {
+	background-color: var(--text-color);
+	background: var(--text-color);
+	text-shadow: none;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:active {
+	background-color: var(--text-color);
+
+}
+
+.dropbtn:focus {
+	background: var(--text-color);
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	user-select: none;
+	position: relative;
+	display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+	user-select: none;
+	display: none;
+	position: relative;
+	float: right;
+	cursor: pointer;
+	font-family: var(--text-font);
+	background-color: var(--text-color);
+	z-index: 3;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	width: var(--width);
+}
+
+.dropdown-content:hover {
+	background-color: var(--text-color);
+	background: var(--text-color);
+}
+
+.dropdown-content:focus {
+	background-color: var(--text-color);
+}
+
+.dropdown-content:active {
+	background-color: var(--text-color);
+}
+
+.dropdown-content a {
+	text-align: center;
+	color: var(--body-bg);
+	padding: 10px;
+	text-decoration: none;
+	display: block;
+	font-family: var(--text-font);
+	font-size: var(--text-size);
+	font-weight: bold;
+}
+
+.dropdown-content a:hover {
+	background-color: transparent;
+}
+
+.show {
+	display: block;
+	padding: 0%;
+}
+
+#myBtn {
+	display: none;
+	/* Hidden by default */
+	width: auto;
+	position: fixed;
+	/* Fixed/sticky position */
+	bottom: 20px;
+	/* Place the button at the bottom of the page */
+	right: 30px;
+	/* Place the button 30px from the right */
+	z-index: 1;
+	/* Make sure it does not overlap */
+	border: 2px solid var(--body-bg);
+	/* Remove borders */
+	outline: none;
+	/* Remove outline */
+	background-color: var(--text-color);
+	/* Set a background color */
+	color: var(--body-bg);
+	/* Text color */
+	cursor: pointer;
+	/* Add a mouse pointer on hover */
+	padding: 15px;
+	/* Some padding */
+	border-radius: 17px;
+	/* Rounded corners */
+	font-size: 140%;
+	/* Increase font size */
+}
+
+#myBtn:hover {
+	background-color: var(--body-bg);
+	color: var(--text-color);
+}
+
+#page-container {
+	position: relative;
+	min-height: 2%;
+}
+
+#content-wrap {
+	padding-bottom: 2%;
+	/* Footer height */
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 99%;
+	height: 2%;
+	/* Footer height */
+}
+
+.copyright-text {
+	font-size: 110%;
+	text-align: center;
+}
+
+.copyright-text a {
+	color: var(--text-color);
+}
+
+.copyright-text a:link {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+.copyright-text a:visited {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+.copyright-text a:hover {
+	text-decoration: underline;
+}
+
+.copyright-text a:active {
+	color: var(--text-color);
+	background-color: gray;
 }
