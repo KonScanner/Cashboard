@@ -1,7 +1,7 @@
 const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT", "SOL_USDT", "XRP_USDT", "DOT_USDT", "CRO_USDT", "MATIC_USDT", "AAVE_USDT", "CRV_USDT", "LINK_USDT", "ATOM_USDT", "UNI_USDT", "ALGO_USDT", "AXS_USDT", "BCH_USDT", "MANA_USDT", "SAND_USDT", "NEAR_USDT", "ENJ_USDT", "ETC_USDT", "ALICE_USDT", "DOGE_USDT", "SHIB_USDT", "1INCH_USDT", "AURORA_USDT"].sort();
 const supported_times = ["1", "5", "15", "30", "60", "4h", "8h", "1D", "D"]
-const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "fantom", "olympus"];
-const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "tether-eurt", "magic-internet-money", "frax", "seur", "stasis-eurs"];
+const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus"];
+const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "origin-dollar", "tether-eurt", "seur", "stasis-eurs"];
 let theme_toggler = document.querySelector('#theme_toggler');
 let graph = document.getElementById("chart");
 /**
