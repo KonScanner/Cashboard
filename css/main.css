@@ -5,6 +5,7 @@
 	--text-weight: bold;
 	--text-size: 100%;
 	--width: 7.5%;
+	--min-width: 125px;
 }
 
 .dark_mode {
@@ -132,6 +133,7 @@ div {
 	color: var(--body-bg);
 	padding: 0.5%;
 	width: var(--width);
+	min-width: var(--min-width);
 	border: none;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	-webkit-appearance: button;
@@ -317,6 +319,7 @@ a:active {
 	border: none;
 	cursor: pointer;
 	width: var(--width);
+	min-width: var(--min-width);
 	user-select: none;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
@@ -356,6 +359,7 @@ a:active {
 	z-index: 3;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	width: var(--width);
+	min-height: var(--min-width);
 }
 
 .dropdown-content:hover {
@@ -395,6 +399,7 @@ a:active {
 	display: none;
 	/* Hidden by default */
 	width: auto;
+	min-width: var(--min-width);
 	position: fixed;
 	/* Fixed/sticky position */
 	bottom: 20px;
