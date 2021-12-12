@@ -434,6 +434,24 @@ function coins_to_fetch() {
 
 	// Coins
 	for (let i = 0; i < supported_coins.length; i++) {
+		coingecko_coin_fetch(coin = supported_coins[i]);
+	}
+
+}
+
+function stables_to_fetch() {
+
+	// Stables
+	for (let i = 0; i < supported_stables.length; i++) {
+		coingecko_coin_fetch(coin = supported_stables[i]);
+	}
+}
+
+
+function coins_to_fetch_initialize() {
+
+	// Coins
+	for (let i = 0; i < supported_coins.length; i++) {
 		coins_to_create_html(coin = supported_coins[i]);
 		coingecko_coin_fetch(coin = supported_coins[i]);
 	}
@@ -446,7 +464,7 @@ function coins_to_fetch() {
 }
 
 display_symbol_options_html()
-coins_to_fetch();
+coins_to_fetch_initialize();
 
 theme_toggler.addEventListener('click', function () {
 	document.body.classList.toggle('dark_mode');

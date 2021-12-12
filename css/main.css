@@ -393,3 +393,26 @@ a:active {
 	padding-right: 0.5%;
 	user-select: none;
 } */
+
+.smallButton {
+	background: url('/images/refresh-button.png') no-repeat;
+	background-color: transparent;
+	cursor: pointer;
+	border: none;
+	background-size: 100% 100%;
+
+	min-height: 20px;
+	min-width: 20px;
+	height: 2%;
+	width: 2%;
+}
+
+.smallButton:hover {
+	background-color: var(--text-color);
+	color: var(--body-bg);
+}
+
+.smallButton:active {
+	background-color: var(--body-bg);
+	color: var(--text-color);
+}
