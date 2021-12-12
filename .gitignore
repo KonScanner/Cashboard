@@ -1,6 +1,8 @@
 # Deprecated
+*.py
+data/
 src/
-main.py
+
 *.json
 *.csv
 # Byte-compiled / optimized / DLL files
