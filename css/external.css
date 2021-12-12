@@ -1,6 +1,6 @@
 #chart {
-	min-height: 365px;
-	overflow: "hidden";
-	margin: auto;
+	min-height: 300px;
+	overflow: hidden;
 	position: relative;
+	padding: 0.5%;
 }

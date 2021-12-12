@@ -53,7 +53,8 @@ var opts = {
 		opposite: false,
 		tickAmount: 10,
 		labels: {
-			offsetX: 0,
+			offsetX: -10,
+			offsetY: 2,
 			rotate: 0,
 			style: {
 				fontFamily: '"Space Mono", monospace',
@@ -107,7 +108,7 @@ var opts = {
 		style: {
 			fontFamily: '"Space Mono", monospace',
 			fontWeight: undefined,
-			colors: "gray"
+			colors: "lightgray"
 		}
 	},
 	plotOptions: {

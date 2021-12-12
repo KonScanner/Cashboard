@@ -5,7 +5,7 @@
 	--text-weight: bold;
 	--text-size: 100%;
 	--width: 7.5%;
-	--min-width: 90px;
+	--min-width: 60px;
 	--min-height: 20px;
 }
 
@@ -303,105 +303,6 @@ a:active {
 	padding-right: 1.5rem;
 }
 
-
-/* Dropdown Button */
-.dropbtn {
-	position: relative;
-	float: right;
-	padding-right: 0.5%;
-	cursor: pointer;
-	user-select: none;
-	z-index: 1;
-	outline: none;
-	background-color: var(--text-color);
-	color: var(--body-bg);
-	padding: 10px;
-	font-size: var(--text-size);
-	font-family: var(--text-font);
-	font-weight: bold;
-	border: none;
-	cursor: pointer;
-	width: var(--width);
-	min-width: var(--min-width);
-	min-height: var(--min-height);
-	user-select: none;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.dropbtn:hover {
-	background-color: var(--text-color);
-	background: var(--text-color);
-	text-shadow: none;
-}
-
-/* Dropdown button on hover & focus */
-.dropbtn:active {
-	background-color: var(--text-color);
-
-}
-
-.dropbtn:focus {
-	background: var(--text-color);
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-	user-select: none;
-	position: relative;
-	display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-	user-select: none;
-	display: none;
-	position: relative;
-	float: right;
-	cursor: pointer;
-	font-family: var(--text-font);
-	background-color: var(--text-color);
-	z-index: 3;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	width: var(--width);
-	min-height: var(--min-height);
-	min-width: var(--min-width);
-}
-
-.dropdown-content:hover {
-	background-color: var(--text-color);
-	background: var(--text-color);
-}
-
-.dropdown-content:focus {
-	background-color: var(--text-color);
-}
-
-.dropdown-content:active {
-	background-color: var(--text-color);
-}
-
-.dropdown-content a {
-	text-align: center;
-	color: var(--body-bg);
-	padding: 10px;
-	text-decoration: none;
-	display: block;
-	font-family: var(--text-font);
-	font-size: var(--text-size);
-	font-weight: bold;
-	min-height: var(--min-height);
-	min-width: var(--min-width);
-}
-
-.dropdown-content a:hover {
-	background-color: transparent;
-}
-
-.show {
-	display: block;
-	padding: 0%;
-}
-
 #myBtn {
 	display: none;
 	/* Hidden by default */
@@ -483,4 +384,12 @@ a:active {
 .copyright-text a:active {
 	color: var(--text-color);
 	background-color: gray;
+}
+
+.logoLinks {
+	float: right;
+	font-size: 65%;
+	padding-top: 0.5%;
+	padding-right: 0.5%;
+	user-select: none;
 }
