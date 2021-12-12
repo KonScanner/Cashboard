@@ -1,5 +1,5 @@
 const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT", "SOL_USDT", "XRP_USDT", "DOT_USDT", "CRO_USDT", "MATIC_USDT", "AAVE_USDT", "CRV_USDT", "LINK_USDT", "ATOM_USDT", "UNI_USDT", "ALGO_USDT", "AXS_USDT", "BCH_USDT", "MANA_USDT", "SAND_USDT", "NEAR_USDT", "ENJ_USDT", "ETC_USDT", "ALICE_USDT", "DOGE_USDT", "SHIB_USDT", "1INCH_USDT", "AURORA_USDT"].sort();
-const supported_times = ["1", "5", "15", "30", "60", "4h", "8h", "1D", "D"]
+const supported_times = ["1", "5", "15", "30", "60", "4h", "1D", "D"]
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus"];
 const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "origin-dollar", "tether-eurt", "seur", "stasis-eurs"];
 let theme_toggler = document.querySelector('#theme_toggler');
@@ -217,14 +217,6 @@ function subtractMinutes(date, minutes) {
 }
 
 
-function odd_times(time) {
-	if (time === "8h") {
-		return "60"
-	} else {
-		return time;
-	}
-}
-
 function get_conception_date(symbol = "") {
 
 	if (symbol === "AVAX_USDT") {
@@ -254,9 +246,6 @@ function deal_with_time(time = "", symbol = "") {
 			}
 			return date_to_unix(subtractMinutes(date = today, minutes = 788401).getTime()); // 18 months
 
-		}
-		if (time === "8h") {
-			return date_to_unix(subtractMinutes(date = today, minutes = 230400).getTime());
 		}
 		if (time === "4h") {
 			return date_to_unix(subtractMinutes(date = today, minutes = 115200).getTime());
@@ -303,17 +292,14 @@ function check_nill(string) {
 
 function prepare_data(data, time) {
 	var dates = data.t.map(d => Math.floor(d * 1000));
-	if (time === "8h") {
-		return hour_average(dates = dates, data = data, hour_coeff = 8);
 
-	} else {
-		let plot_ = []
-		for (let i = 0; i < data.o.length; i++) {
-			let c_p = [data.o[i], data.h[i], data.l[i], data.c[i]]
-			plot_.push([dates[i], c_p])
-		}
-		return plot_;
+	let plot_ = []
+	for (let i = 0; i < data.o.length; i++) {
+		let c_p = [data.o[i], data.h[i], data.l[i], data.c[i]]
+		plot_.push([dates[i], c_p])
 	}
+	return plot_;
+
 
 }
 
@@ -347,7 +333,7 @@ function hour_average(dates, data, hour_coeff) {
 
 function get_data_with_symbol(symbol, time, from, to) {
 	// Fetches data, given symbol,time,from,to
-	let time_ = odd_times(time);
+	let time_ = time;
 	console.log(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time_}&from=${from}&to=${to}`)
 	console.log(Date(Math.floor(from * 1000)), Date(Math.floor(to * 1000)))
 	fetch(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time_}&from=${from}&to=${to}`).then(function (response) {
