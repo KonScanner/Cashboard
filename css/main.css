@@ -395,12 +395,11 @@ a:active {
 } */
 
 .smallButton {
-	background: url('/images/refresh-button.png') no-repeat;
+	background: url('https://www.freeiconspng.com/uploads/arrow-refresh-reload-icon-29.png') no-repeat;
 	background-color: transparent;
 	cursor: pointer;
 	border: none;
 	background-size: 100% 100%;
-
 	min-height: 20px;
 	min-width: 20px;
 	height: 2%;
@@ -408,11 +407,11 @@ a:active {
 }
 
 .smallButton:hover {
-	background-color: var(--text-color);
+	background-color: gray;
 	color: var(--body-bg);
 }
 
 .smallButton:active {
-	background-color: var(--body-bg);
+	background-color: gray;
 	color: var(--text-color);
 }
