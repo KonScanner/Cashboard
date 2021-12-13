@@ -1,6 +1,5 @@
 const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT", "SOL_USDT", "XRP_USDT", "DOT_USDT", "CRO_USDT", "MATIC_USDT", "AAVE_USDT", "CRV_USDT", "LINK_USDT", "ATOM_USDT", "UNI_USDT", "ALGO_USDT", "AXS_USDT", "BCH_USDT", "MANA_USDT", "SAND_USDT", "NEAR_USDT", "ENJ_USDT", "ETC_USDT", "ALICE_USDT", "DOGE_USDT", "SHIB_USDT", "1INCH_USDT", "AURORA_USDT"].sort();
 const supported_times = ["1", "5", "15", "30", "60", "4h", "1D", "D"]
-const supported_times_cg = ["1", "7", "14", "30", "90", "180", "365", "max"] // work out duplicate '1' 1 min vs 1 day
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus"];
 const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "origin-dollar", "tether-eurt", "seur", "stasis-eurs"];
 let theme_toggler = document.querySelector('#theme_toggler');
@@ -236,8 +235,19 @@ function get_symbol(event) {
 		let from = String(deal_with_time(time = time, symbol = symbol));
 		console.log("to", to, "from", from);
 
-		// get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
-		get_data_with_symbol_cg(coin = "ethereum", time = "max");
+		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
+	}
+}
+
+function get_symbol_on_press() {
+	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
+		let symbol = document.getElementById("HiddenSymbol").value;
+		let time = document.getElementById("HiddenTime").value;
+		let to = String(date_to_unix(get_today()))
+		let from = String(deal_with_time(time = time, symbol = symbol));
+		console.log("to", to, "from", from);
+
+		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
 	}
 }
 
@@ -289,6 +299,7 @@ function deal_with_time(time = "", symbol = "") {
 				return get_conception_date(symbol)
 			}
 			return date_to_unix(subtractMinutes(date = today, minutes = 788401).getTime()); // 18 months
+
 		}
 		if (time === "4h") {
 			return date_to_unix(subtractMinutes(date = today, minutes = 115200).getTime());
@@ -343,16 +354,6 @@ function prepare_data(data, time) {
 	}
 	return plot_;
 
-}
-
-function prepare_data_cg(data, time) {
-	let plot_ = []
-	for (let i = 0; i < data.length; i++) {
-		let date = Math.floor(data[i][0] * 1000);
-		let c_p = [date, data[i][1], data[i][2], data[i][3], data[i][4]]
-		plot_.push(c_p)
-	}
-	return plot_;
 
 }
 
@@ -445,26 +446,6 @@ function get_data_with_symbol(symbol, time, from, to) {
 	});
 }
 
-function get_data_with_symbol_cg(coin, time, currency = "usd") {
-	let time_ = time;
-	console.log(`https://api.coingecko.com/api/v3/coins/${coin}/ohlc?vs_currency=${currency}&days=${time}`)
-	fetch(`https://api.coingecko.com/api/v3/coins/${coin}/ohlc?vs_currency=${currency}&days=${time}`).then(function (response) {
-		// The API call was successful!
-		return response.json();
-	}).then(function (data) {
-		console.log(data);
-		plot_ = prepare_data_cg(data, time);
-		// // plot_sma = prepare_data_sma(data, time);
-		// plot_sma = [];
-		// plot_ema = prepare_data_ema(data, time, period = 50);
-		get_chart(dates = plot_, data_sma = [], data_ema = [], symbol = "ethereum", max_date = dates.max, min_date = dates.min)
-	}).catch(function (err) {
-		// There was an errr
-		console.warn(`Error ${err}`);
-	});
-
-}
-
 function coingecko_coin_data_pre(data, coin = "eth") {
 	// if (coin === "tether" | coin === "terrausd" | coin === "usd-coin" | coin === "dai" | coin === "tether-eurt") {
 	if (in_array(array = supported_coins, string = coin)) {
@@ -515,18 +496,6 @@ function in_array(array, string) {
 		return false
 	} else {
 		return true
-	}
-}
-
-function get_symbol_on_press() {
-	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
-		let symbol = document.getElementById("HiddenSymbol").value;
-		let time = document.getElementById("HiddenTime").value;
-		let to = String(date_to_unix(get_today()))
-		let from = String(deal_with_time(time = time, symbol = symbol));
-		console.log("to", to, "from", from);
-
-		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
 	}
 }
 
