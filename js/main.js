@@ -239,18 +239,6 @@ function get_symbol(event) {
 	}
 }
 
-function get_symbol_on_press() {
-	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
-		let symbol = document.getElementById("HiddenSymbol").value;
-		let time = document.getElementById("HiddenTime").value;
-		let to = String(date_to_unix(get_today()))
-		let from = String(deal_with_time(time = time, symbol = symbol));
-		console.log("to", to, "from", from);
-
-		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
-	}
-}
-
 /**
  *  TIME AND DATAPREP FUNCTIONS
  */
@@ -496,6 +484,18 @@ function in_array(array, string) {
 		return false
 	} else {
 		return true
+	}
+}
+
+function get_symbol_on_press() {
+	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
+		let symbol = document.getElementById("HiddenSymbol").value;
+		let time = document.getElementById("HiddenTime").value;
+		let to = String(date_to_unix(get_today()))
+		let from = String(deal_with_time(time = time, symbol = symbol));
+		console.log("to", to, "from", from);
+
+		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
 	}
 }
 
