@@ -174,7 +174,7 @@ function get_chart(data, data_sma, data_ema, symbol, min_date, max_date) {
 				title: {
 					text: `${symbol}`,
 				},
-				color: 'gray'
+				color: 'gray	'
 
 			}
 		],
