@@ -26,6 +26,7 @@ var opts = {
 		},
 		redrawOnParentResize: true
 	},
+
 	dataLabels: {
 		enabled: false
 	},
@@ -63,7 +64,27 @@ var opts = {
 			}
 		},
 		tooltip: {
-			enabled: true
+			enabled: true,
+			shared: true,
+			custom: [function ({
+				seriesIndex,
+				dataPointIndex,
+				w
+			}) {
+				return w.globals.series[seriesIndex][dataPointIndex]
+			}, function ({
+				seriesIndex,
+				dataPointIndex,
+				w
+			}) {
+				var o = w.globals.seriesCandleO[seriesIndex][dataPointIndex]
+				var h = w.globals.seriesCandleH[seriesIndex][dataPointIndex]
+				var l = w.globals.seriesCandleL[seriesIndex][dataPointIndex]
+				var c = w.globals.seriesCandleC[seriesIndex][dataPointIndex]
+				return (
+					''
+				)
+			}]
 		}
 
 	},
@@ -118,9 +139,6 @@ var opts = {
 			}
 		}
 	},
-	// theme: {
-	// 	mode: "dark"
-	// }
 }
 
 var chart = new ApexCharts(
@@ -129,24 +147,48 @@ var chart = new ApexCharts(
 );
 chart.render();
 
-function get_chart(data, symbol, min_date, max_date) {
+function get_chart(data, data_sma, data_ema, symbol, min_date, max_date) {
 
 	var options = {
 		series: [{
-			name: `${symbol}`,
-			data: data,
-			title: {
-				text: `${symbol}`,
+				name: `${symbol}`,
+				data: data,
+				type: 'candlestick',
+				title: {
+					text: `${symbol}`,
+				},
 			},
-		}],
+			// {
+			// 	name: `${symbol}_sma`,
+			// 	data: data_sma,
+			// 	type: 'line',
+			// 	title: {
+			// 		text: `${symbol}`,
+			// 	},
+
+			// },
+			{
+				name: `${symbol}_ema_50`,
+				data: data_ema,
+				type: 'line',
+				title: {
+					text: `${symbol}`,
+				},
+				color: 'gray'
+
+			}
+		],
 		chart: {
-			// id: 'area-datetime',
-			type: 'candlestick',
 			zoom: {
 				autoScaleYaxis: true
 			},
 			redrawOnParentResize: true
 		},
+		stroke: {
+			curve: 'smooth',
+			width: [1, 3, 3]
+		},
+
 		xaxis: {
 			max: max_date,
 			min: min_date
@@ -303,32 +345,73 @@ function prepare_data(data, time) {
 
 }
 
-function hour_average(dates, data, hour_coeff) {
+function avg(arr, idx, range) {
+	return sum(arr.slice(idx - range, idx)) / range;
+}
 
-	let res = []
-	let o = 0;
-	let h = 0;
-	let l = 0;
-	let c = 0;
-	let t = 0;
-	for (let i = 0; i < data.o.length; i++) {
-		if (i % hour_coeff === 0 & i !== 0) {
-			res.push([t, [o / hour_coeff, h / hour_coeff, l / hour_coeff, c / hour_coeff]])
-			o = 0;
-			h = 0;
-			l = 0;
-			c = 0;
-			t = 0;
-		} else {
-			o += data.o[i]
-			h += data.h[i]
-			l += data.l[i]
-			c += data.c[i]
-			t = dates[i]
-		}
+function sum(arr) {
+	var len = arr.length;
+	var num = 0;
+	while (len--) num += Number(arr[len]);
+	return num;
+}
+
+function toFixed(n) {
+	return n.toFixed(2);
+}
+
+
+function sma(arr, range, format) {
+	if (!Array.isArray(arr)) {
+		throw TypeError('expected first argument to be an array');
+	}
+
+	var fn = typeof format === 'function' ? format : toFixed;
+	var num = range || arr.length;
+	var res = [];
+	var len = arr.length + 1;
+	var idx = num - 1;
+	while (++idx < len) {
+		res.push(fn(avg(arr, idx, num)));
 	}
 	return res;
+}
 
+function ema(data, period = 21) {
+	var k = 2 / (period + 1);
+	// first item is just the same as the first item in the input
+	let emaArray = [data[0]];
+	// for the rest of the items, they are computed with the previous one
+	for (var i = 1; i < data.length; i++) {
+		emaArray.push(data[i] * k + emaArray[i - 1] * (1 - k));
+	}
+	return emaArray;
+};
+
+function prepare_data_sma(data, timne, period = 20) {
+	w_minus_1 = period - 1
+	let dates = data.t.slice(w_minus_1, data.t.length);
+	dates = dates.map(d => Math.floor(d * 1000));
+	let close_values = sma(data.c, period);
+	let plot_ = []
+	for (let i = 0; i < dates.length; i++) {
+		let c_p = [close_values[i]]
+		plot_.push([dates[i], c_p])
+	}
+	return plot_;
+}
+
+function prepare_data_ema(data, time, period = 21) {
+	w_minus_1 = period - 1
+	let dates = data.t.slice(w_minus_1, data.t.length);
+	dates = dates.map(d => Math.floor(d * 1000));
+	let close_values = ema(data.c, period);
+	let plot_ = []
+	for (let i = 0; i < dates.length; i++) {
+		let c_p = [close_values[i]]
+		plot_.push([dates[i], c_p])
+	}
+	return plot_;
 }
 
 function get_data_with_symbol(symbol, time, from, to) {
@@ -341,7 +424,10 @@ function get_data_with_symbol(symbol, time, from, to) {
 		return response.json();
 	}).then(function (data) {
 		plot_ = prepare_data(data, time);
-		get_chart(dates = plot_, symbol = symbol, max_date = dates.max, min_date = dates.min)
+		// plot_sma = prepare_data_sma(data, time);
+		plot_sma = [];
+		plot_ema = prepare_data_ema(data, time, period = 50);
+		get_chart(dates = plot_, data_sma = plot_sma, data_ema = plot_ema, symbol = symbol, max_date = dates.max, min_date = dates.min)
 	}).catch(function (err) {
 		// There was an errr
 		console.warn(`Error ${err}`);
@@ -449,16 +535,6 @@ function coins_to_fetch_initialize() {
 	}
 }
 
-display_symbol_options_html()
-coins_to_fetch_initialize();
-
-theme_toggler.addEventListener('click', function () {
-	document.body.classList.toggle('dark_mode');
-	// graph.style.backgroundColor = "#f5f5f5";
-	// graph.style.color = "#f5f5f5";
-});
-
-
 function dropdownfunc() {
 	document.getElementById("myDropdown").classList.toggle("show");
 }
@@ -476,5 +552,16 @@ window.onclick = function (event) {
 		}
 	}
 }
+
+
+display_symbol_options_html();
+coins_to_fetch_initialize();
+
+theme_toggler.addEventListener('click', function () {
+	document.body.classList.toggle('dark_mode');
+	// graph.style.backgroundColor = "#f5f5f5";
+	// graph.style.color = "#f5f5f5";
+});
+
 
 window.addEventListener('input', get_symbol, false);

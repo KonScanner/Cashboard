@@ -30,6 +30,7 @@ body {
 .apexcharts-theme-light,
 .apexcharts-svg,
 .apexcharts-legend,
+.apexcharts-legend-text,
 .apexcharts-tooltip,
 .apexcharts-tooltip-box,
 .apexcharts-tooltip-candlestick,
@@ -340,25 +341,9 @@ a:active {
 	color: var(--text-color);
 }
 
-#page-container {
-	position: relative;
-	min-height: 2%;
-}
-
-#content-wrap {
-	padding-bottom: 2%;
-	/* Footer height */
-}
-
-#footer {
-	position: absolute;
-	bottom: 0;
-	width: 99%;
-	height: 2%;
-	/* Footer height */
-}
 
 .copyright-text {
+	padding-bottom: 2%;
 	font-size: 110%;
 	text-align: center;
 }
