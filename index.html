@@ -1,92 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/external.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <title>Cashboard</title>
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="css/external.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<title>Cashboard</title>
-</head>
-
-<body>
-	<main>
-		<!-- <h1 id="logo"><a href="">€₳$H₿O₳RƉ</a></h1> -->
-		<!-- <h1 id="logo"><a href="">Cashboard</a> <a class="logoLinks" href="#useful_links_title">Useful
+  <body>
+    <main>
+      <!-- <h1 id="logo"><a href="">€₳$H₿O₳RƉ</a></h1> -->
+      <!-- <h1 id="logo"><a href="">Cashboard</a> <a class="logoLinks" href="#useful_links_title">Useful
 				Links</a> <a class="logoLinks"> &bull; </a><a class="logoLinks" href="#main_title_center">24hr Values
 			</a></h1> -->
-		<h1 id="logo"><a href="">Cashboard</a></h1>
-		<div>
-			<div class="box">
-				<label id="presets" for="dropDownSymbol">Presets: </label>
-				<select id="dropDownSymbol">
-				</select>
-				<input type="text" id="HiddenSymbol" hidden=True value="">
-				<select id="dropDownTime">
-					<option value="D">1 week</option>
-					<option value="1D">1 day</option>
-					<option value="4h">4 Hours</option>
-					<option value="60">60 min</option>
-					<option value="30">30 min</option>
-					<option value="15">15 min</option>
-					<option value="5">5 min</option>
-					<option value="1">1 min</option>
-				</select>
-				<input type="text" id="HiddenTime" hidden=True value="D">
-				<span id="theme_toggler">
-					💡
-				</span>
-				<span id="theme_toggler">
-					<button onclick="get_symbol_on_press()" class="smallButton"></button>
-				</span>
-			</div>
-		</div>
-		<div>
-			<div id="chart">
-			</div>
-		</div>
+      <section class="landing">
+        <nav>
+          <h1 id="logo"><a href="">Cashboard</a></h1>
 
-		<div class="float-container">
-			<h2 id="main_title_center"><u>Price & Marketcap 24h & Total Volume*</u></h2>
-			<div id="coins" class="float-child">
-				<button onclick="coins_to_fetch()" class="smallButton"></button>
-				<h3 id="coin_info_title" class="marketcap_info"><u>Coins</u></h3>
+          <ul class="nav-links">
+            <li><a href="">Home</a></li>
+            <!-- <li><a href="./pages/markets">Markets</a></li> -->
+            <!-- <li><a href="https://www.spacex.com/updates/">Updates</a></li> -->
+          </ul>
+        </nav>
 
-			</div>
+        <div>
+          <div class="box">
+            <label id="presets" for="dropDownSymbol">Presets: </label>
+            <select id="dropDownSymbol"></select>
+            <input type="text" id="HiddenSymbol" hidden="True" value="" />
+            <select id="dropDownTime">
+              <option value="D">1 week</option>
+              <option value="1D">1 day</option>
+              <option value="4h">4 Hours</option>
+              <option value="60">60 min</option>
+              <option value="30">30 min</option>
+              <option value="15">15 min</option>
+              <option value="5">5 min</option>
+              <option value="1">1 min</option>
+            </select>
+            <input type="text" id="HiddenTime" hidden="True" value="D" />
+            <span id="theme_toggler"> 💡 </span>
+            <span id="theme_toggler">
+              <button
+                onclick="get_symbol_on_press()"
+                class="smallButton"
+              ></button>
+            </span>
+          </div>
+        </div>
+        <div>
+          <div id="chart"></div>
+        </div>
 
-			<div id="stables" class="float-child">
-				<button onclick="stables_to_fetch()" class="smallButton"></button>
-				<h3 id="coin_info_title" class="marketcap_info"><u>Stables</u></h3>
+        <div class="float-container">
+          <h2 id="main_title_center">
+            <u>Price & Marketcap 24h & Total Volume*</u>
+          </h2>
+          <div id="coins" class="float-child">
+            <button onclick="coins_to_fetch()" class="smallButton"></button>
+            <h3 id="coin_info_title" class="marketcap_info"><u>Coins</u></h3>
+          </div>
 
-			</div>
-			<h5 id="updated_on_refresh">* updated on refresh</h5>
-		</div>
+          <div id="stables" class="float-child">
+            <button onclick="stables_to_fetch()" class="smallButton"></button>
+            <h3 id="coin_info_title" class="marketcap_info"><u>Stables</u></h3>
+          </div>
+          <h5 id="updated_on_refresh">* updated on refresh</h5>
+        </div>
 
-		<div class="float-container">
-			<h2 id="useful_links_title"><u>Useful inks:</u></h2>
-			<div class="float-child2">
-				<hr />
-				<ul class="inline">
-					<li><a href="https://senatestockwatcher.com/">Senate Stock Watcher</a></li>
-					<li><a href="https://coinmarketcal.com/en/">Coin Market Cal</a></li>
-					<li><a href="https://cryptoquant.com/prochart/KelFWoPVmcWOy4V">ETH // OI + Funding</a></li>
-					<li><a href="https://trdr.io/console/eOzCLNsu">Bitcoin/Tether Advanced</a></li>
-					<li><a href="https://defipulse.com/">Defi Pulse (TVL)</a></li>
-					<li><a href="https://defillama.com/">Defi Llama (TVL)</a></li>
-				</ul>
-				<hr />
-			</div>
-		</div>
-		<div>
-			<button onclick="topFunction()" id="myBtn" title="Go to top">Back to Top</button>
-		</div>
-		<footer class="copyright-text" id="copyright"></footer>
-	</main>
-
-</body>
-<script src="js/main.js"></script>
-<script src="js/window.js"></script>
-
+        <div class="float-container">
+          <h2 id="useful_links_title"><u>Useful inks:</u></h2>
+          <div class="float-child2">
+            <hr />
+            <ul class="inline">
+              <li>
+                <a href="https://senatestockwatcher.com/"
+                  >Senate Stock Watcher</a
+                >
+              </li>
+              <li>
+                <a href="https://coinmarketcal.com/en/">Coin Market Cal</a>
+              </li>
+              <li>
+                <a href="https://cryptoquant.com/prochart/KelFWoPVmcWOy4V"
+                  >ETH // OI + Funding</a
+                >
+              </li>
+              <li>
+                <a href="https://trdr.io/console/eOzCLNsu"
+                  >Bitcoin/Tether Advanced</a
+                >
+              </li>
+              <li><a href="https://defipulse.com/">Defi Pulse (TVL)</a></li>
+              <li><a href="https://defillama.com/">Defi Llama (TVL)</a></li>
+            </ul>
+            <hr />
+          </div>
+        </div>
+        <div>
+          <button onclick="topFunction()" id="myBtn" title="Go to top">
+            Back to Top
+          </button>
+        </div>
+      </section>
+      <footer class="copyright-text" id="copyright"></footer>
+    </main>
+  </body>
+  <script src="js/main.js"></script>
+  <script src="js/window.js"></script>
 </html>

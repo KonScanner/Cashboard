@@ -26,6 +26,83 @@ body {
 	vertical-align: baseline;
 }
 
+.landing {
+	position: relative;
+	min-height: 100vh;
+	opacity: 0.95;
+	background-size: cover;
+	padding: 0rem 2rem;
+}
+
+
+nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 10vh;
+}
+
+.nav-links {
+	display: flex;
+	list-style: none;
+	font-size: 140%;
+}
+
+.nav-links li {
+	position: relative;
+	left: -50%;
+	overflow: translate(50, 0);
+	padding-left: 15%;
+	background-color: var(--body-bg);
+}
+
+.nav-links a:link {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+.nav-links a:visited {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+.nav-links a:hover {
+	text-decoration: underline;
+}
+
+.nav-links a:active {
+	color: var(--text-color);
+	background-color: gray;
+}
+
+#logo {
+	font-family: var(--text-font);
+	font-weight: bold;
+	background-color: --body-bg;
+	font-size: 250%;
+
+}
+
+#logo a:link {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+#logo a:visited {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+#logo a:hover {
+	text-decoration: underline;
+}
+
+#logo a:active {
+	color: var(--text-color);
+	background-color: gray;
+}
+
+
 .apexcharts-canvas,
 .apexcharts-theme-light,
 .apexcharts-svg,
@@ -91,33 +168,7 @@ div {
 	padding: 0.25%;
 }
 
-#logo {
-	padding-left: 0.45%;
-	font-family: var(--text-font);
-	font-weight: bold;
-	background-color: rgb(172, 172, 172);
-	font-size: 250%;
 
-}
-
-#logo a:link {
-	text-decoration: none;
-	color: var(--text-color);
-}
-
-#logo a:visited {
-	text-decoration: none;
-	color: var(--text-color);
-}
-
-#logo a:hover {
-	text-decoration: underline;
-}
-
-#logo a:active {
-	color: var(--text-color);
-	background-color: var(--body-bg);
-}
 
 #presets {
 	padding-left: 0.45%;
