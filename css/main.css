@@ -251,7 +251,7 @@ hr {
 	color: gray;
 }
 
-img {
+.coin_image {
 	margin-top: 0.5%;
 	margin-bottom: 0.5%;
 	margin-right: 2.5%;
@@ -260,13 +260,31 @@ img {
 	width: 7.5%;
 }
 
-img:hover {
+.coin_image:hover {
+	opacity: 0.4;
+}
+
+.coin_image2 {
+	margin-top: 1.5%;
+	margin-bottom: 1.5%;
+	margin-right: 0.25%;
+	margin-left: 0.25%;
+	float: left;
+	width: 1.5%;
+}
+
+.coin_image:hover {
 	opacity: 0.4;
 }
 
 .marketcap_info {
 	text-align: center;
 }
+
+#market_info_title{
+	margin-left: 5%;
+}
+
 
 .inline li {
 	text-align: center;
