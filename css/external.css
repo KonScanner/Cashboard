@@ -1,6 +1,56 @@
+:root {
+	--metamask-on: blue;
+	--metamask-off: gray;
+	--body-bg: #f5f5f5;
+	--text-color: #252525;
+	--text-font: "Space Mono", monospace;
+	--text-weight: bold;
+	--text-size: 100%;
+	--width: 7.5%;
+	--min-width: 60px;
+	--min-height: 20px;
+}
+
 #chart {
 	min-height: 300px;
 	overflow: hidden;
 	position: relative;
 	padding: 0.5%;
+}
+
+.float-child3 {
+	width: 100%;
+}
+
+.meta {
+	min-width: var(--min-width);
+	min-height: var(--min-height);
+	z-index: 1;
+	/* Make sure it does not overlap */
+	border: 2px solid var(--body-bg);
+	/* Remove borders */
+	outline: none;
+	background-color: green;
+	/* Set a background color */
+	color: var(--body-bg);
+	/* Text color */
+	cursor: pointer;
+	/* Add a mouse pointer on hover */
+	padding: 15px;
+	/* Some padding */
+	border-radius: 17px;
+	/* Rounded corners */
+	font-size: var(--text-size);
+	font-family: var(--text-font);
+	/* Increase font size */
+	width: 125px;
+	margin: 0px -60px;
+	position: relative;
+	top: 50%;
+	left: 50%;
+}
+
+.meta:active {
+	background-color: var(--body-bg);
+	color: var(--text-color);
 }

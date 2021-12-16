@@ -226,7 +226,6 @@ div {
 }
 
 .float-container {
-	/* border: 1px solid black; */
 	padding: 1%;
 }
 
@@ -281,7 +280,7 @@ hr {
 	text-align: center;
 }
 
-#market_info_title{
+#market_info_title {
 	margin-left: 5%;
 }
 
@@ -323,6 +322,12 @@ a:active {
 	text-align: center;
 	padding-bottom: 1%;
 }
+
+.main_title_center {
+	text-align: center;
+	padding-bottom: 1%;
+}
+
 
 #coin_info_title {
 	margin-left: 10%;
@@ -373,7 +378,7 @@ a:active {
 	padding-right: 1.5rem;
 }
 
-#myBtn {
+.myBtn {
 	display: none;
 	/* Hidden by default */
 	width: auto;
@@ -405,7 +410,7 @@ a:active {
 	/* Increase font size */
 }
 
-#myBtn:hover {
+.myBtn:hover {
 	background-color: var(--body-bg);
 	color: var(--text-color);
 }
