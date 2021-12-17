@@ -3,6 +3,7 @@ const loginButton = document.getElementById('loginButton')
 const userWallet = document.getElementById('userWallet')
 const title = document.getElementById("main_title_center");
 
+
 function toggleButton() {
 	if (!window.ethereum) {
 		loginButton.style.display = "none";
