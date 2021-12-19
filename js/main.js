@@ -1,4 +1,3 @@
-const supported_symbols = ["BTC_USDT", "ETH_USDT", "ADA_USDT", "AVAX_USDT", "SOL_USDT", "XRP_USDT", "DOT_USDT", "CRO_USDT", "MATIC_USDT", "AAVE_USDT", "CRV_USDT", "LINK_USDT", "ATOM_USDT", "UNI_USDT", "ALGO_USDT", "AXS_USDT", "BCH_USDT", "MANA_USDT", "SAND_USDT", "NEAR_USDT", "ENJ_USDT", "ETC_USDT", "ALICE_USDT", "DOGE_USDT", "SHIB_USDT", "1INCH_USDT", "AURORA_USDT"].sort();
 const supported_times = ["1", "5", "15", "30", "60", "4h", "1D", "D"]
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus"];
 const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "origin-dollar", "tether-eurt", "seur", "stasis-eurs"];
@@ -198,15 +197,15 @@ function get_chart(data, data_sma, data_ema, symbol, min_date, max_date) {
 	chart.updateOptions(options);
 };
 
-function display_symbol_options_html() {
+function display_symbol_options_html(coins) {
 	var mydiv = document.getElementById("dropDownSymbol");
 	var newElement = document.createElement('div');
 	var str = ''
-	for (let i = 0; i < supported_symbols.length; i++) {
-		let coin = supported_symbols[i].match(/[0-9A-Z]+/g)[0];
+	for (let k in coins) {
+		let coin = coins[k]
 		let option = document.createElement("option");
 		option.text = coin;
-		option.value = supported_symbols[i];
+		option.value = k;
 		let select = document.getElementById("dropDownSymbol");
 		select.appendChild(option);
 	}
@@ -476,6 +475,31 @@ function coingecko_coin_fetch(coin) {
 	});
 }
 
+function woo_coin_list() {
+	fetch(`https://api.woo.org/v4/public/token`).then(function (response) {
+		// The API call was successful!
+		return response.json();
+	}).then(function (data) {
+		let ret = woo_list(data);
+		display_symbol_options_html(ret);
+	}).catch(function (err) {
+		// There was an errr
+		console.warn(`Error ${err}`);
+	});
+}
+
+function woo_list(data) {
+	const coins = new Object();
+	for (let i = 0; i < data.data.rows.length; i++) {
+		if (data.data.rows[i]["fullname"] !== "Tether") {
+			// Doesn't fix the problem, but it over-writes.
+			coins[data.data.rows[i]["balance_token"] + "_USDT"] = data.data.rows[i]["fullname"];
+		}
+	}
+
+	return coins;
+
+}
 
 function coingecko_marketcap(symbol) {
 	if (symbol === "BTC_USDT") {
@@ -565,8 +589,7 @@ window.onclick = function (event) {
 	}
 }
 
-
-display_symbol_options_html();
+woo_coin_list();
 coins_to_fetch_initialize();
 
 theme_toggler.addEventListener('click', function () {
