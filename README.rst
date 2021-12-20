@@ -25,6 +25,8 @@ Todos:
             - https://towardsdatascience.com/top-5-best-cryptocurrency-apis-for-developers-32475d2eb749
         **Mesari**:
             - https://data.messari.io/api
+    - Make all operations async
+    - Find a way to disallow spam refresh so coingecko does not temp-ban.
 
 INFEASIBILITIES:
 ----------------
