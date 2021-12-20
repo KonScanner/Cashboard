@@ -40,16 +40,14 @@ function get_marketcap() {
 }
 
 function coin_categories(data) {
-
   for (let i = 0; i < data.length; i++) {
-
     markets_to_create_html(id = data[i].id);
     coingecko_markets_populate(data[i], data[i].id);
-
   }
 }
 
 function market_cap_pre(data) {
+  debugger
   console.log(data);
 }
 
@@ -93,9 +91,11 @@ function coingecko_markets_populate(data, id) {
   //     .toString()
   //     .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " $"
   // );
-  document.getElementById(`${id}_image`).src = check_nill(data.top_3_coins[0]);
-  document.getElementById(`${id}_image2`).src = check_nill(data.top_3_coins[1]);
-  document.getElementById(`${id}_image3`).src = check_nill(data.top_3_coins[2]);
+  if (data.top_3_coins !== undefined) {
+    document.getElementById(`${id}_image`).src = check_nill(data.top_3_coins[0]);
+    document.getElementById(`${id}_image2`).src = check_nill(data.top_3_coins[1]);
+    document.getElementById(`${id}_image3`).src = check_nill(data.top_3_coins[2]);
+  }
 
   // var link = document.getElementById(`${coin}_id`);
   // link.setAttribute("href", check_nill(data.links.homepage[0]));
@@ -115,4 +115,4 @@ function markets_to_fetch_initialize() {
 
 // markets_to_fetch_initialize();
 coingecko_market_fetch();
-get_marketcap();
+// get_marketcap();
