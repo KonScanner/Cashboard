@@ -574,6 +574,21 @@ function dropdownfunc() {
 	document.getElementById("myDropdown").classList.toggle("show");
 }
 
+
+function sleep(ms) {
+	// https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function refresh_every_t(t = 30) {
+	while (true) {
+		await sleep(t * 1000);
+		get_symbol_on_press();
+		coins_to_fetch();
+		stables_to_fetch();
+	}
+}
+
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function (event) {
 	if (!event.target.matches('.dropbtn')) {
@@ -590,7 +605,7 @@ window.onclick = function (event) {
 
 woo_coin_list();
 coins_to_fetch_initialize();
-
+refresh_every_t();
 
 
 
