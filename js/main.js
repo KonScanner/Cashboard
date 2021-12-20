@@ -1,7 +1,6 @@
 const supported_times = ["1", "5", "15", "30", "60", "4h", "1D", "D"]
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus"];
 const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "origin-dollar", "tether-eurt", "seur", "stasis-eurs"];
-let theme_toggler = document.querySelector('#theme_toggler');
 let graph = document.getElementById("chart");
 /**
  * Charts & chart functions
@@ -592,11 +591,7 @@ window.onclick = function (event) {
 woo_coin_list();
 coins_to_fetch_initialize();
 
-theme_toggler.addEventListener('click', function () {
-	document.body.classList.toggle('dark_mode');
-	// graph.style.backgroundColor = "#f5f5f5";
-	// graph.style.color = "#f5f5f5";
-});
+
 
 
 window.addEventListener('input', get_symbol, false);

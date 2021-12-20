@@ -266,10 +266,9 @@ hr {
 .coin_image2 {
 	margin-top: 1.5%;
 	margin-bottom: 1.5%;
-	margin-right: 0.25%;
-	margin-left: 0.25%;
+	margin-left: -0.5%;
 	float: left;
-	width: 1.5%;
+	width: 40px;
 }
 
 .coin_image:hover {
