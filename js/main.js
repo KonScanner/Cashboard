@@ -1,6 +1,6 @@
 const supported_times = ["1", "5", "15", "30", "60", "4h", "1D", "D"]
-const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus"];
-const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "origin-dollar", "tether-eurt", "seur", "stasis-eurs"];
+const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "astroport", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus"];
+const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "liquity-usd", "origin-dollar", "tether-eurt", "seur", "stasis-eurs"];
 let graph = document.getElementById("chart");
 /**
  * Charts & chart functions
