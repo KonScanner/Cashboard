@@ -217,23 +217,27 @@ function display_symbol_options_html(coins) {
 
 function get_symbol(event) {
 	// Gets symbol and time and places them into a hidden input field
-	if (event.target.id !== 'dropDownSymbol' & event.target.id !== 'dropDownTime') {
+	if (event.target.id !== 'dropDownSymbol' & event.target.id !== 'dropDownTime' & event.target.id !== "dropDownPlotType") {
 		return null;
 	}
 	if (event.target.id === 'dropDownSymbol') {
 		document.getElementById("HiddenSymbol").value = event.target.value;
 	}
+	if (event.target.id === 'dropDownPlotType') {
+		document.getElementById("HiddenPlotType").value = event.target.value;
+	}
 	if (event.target.id === 'dropDownTime') {
 		document.getElementById("HiddenTime").value = event.target.value;
 	}
-	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
+	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "" & document.getElementById("HiddenPlotType").value !== "") {
 		let symbol = document.getElementById("HiddenSymbol").value;
 		let time = document.getElementById("HiddenTime").value;
+		let plotType = document.getElementById("HiddenPlotType").value;
 		let to = String(date_to_unix(get_today()))
 		let from = String(deal_with_time(time = time, symbol = symbol));
 		console.log("to", to, "from", from);
-
-		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
+		console.log(plotType)
+		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to, plotType = plotType);
 	}
 }
 
@@ -355,6 +359,27 @@ function prepare_data(data, time) {
 
 }
 
+function heineken_data(data) {
+	var dates = data.t.map(d => Math.floor(d * 1000));
+
+	let plot_ = []
+	for (let i = 0; i < data.o.length; i++) {
+		if (i === 0) {
+			var open = (data.o[i] + data.c[i]) / 2;
+
+		} else {
+			var open = (data.o[i - 1] + data.c[i - 1]) / 2;
+		}
+		var close = (data.o[i] + data.h[i] + data.l[i] + data.c[i]) / 4;
+
+		var high = Math.max(data.h[i], data.o[i], data.c[i]);
+		var low = Math.min(data.l[i], data.o[i], data.c[i]);
+		var c_p = [open, high, low, close]
+		plot_.push([dates[i], c_p])
+	}
+	return plot_;
+}
+
 function avg(arr, idx, range) {
 	return sum(arr.slice(idx - range, idx)) / range;
 }
@@ -424,7 +449,7 @@ function prepare_data_ema(data, time, period = 21) {
 	return plot_;
 }
 
-function get_data_with_symbol(symbol, time, from, to) {
+function get_data_with_symbol(symbol, time, from, to, plotType) {
 	// Fetches data, given symbol,time,from,to
 	let time_ = time;
 	console.log(`https://api.woo.org/tv/history?symbol=${symbol}&resolution=${time_}&from=${from}&to=${to}`)
@@ -433,7 +458,11 @@ function get_data_with_symbol(symbol, time, from, to) {
 		// The API call was successful!
 		return response.json();
 	}).then(function (data) {
-		plot_ = prepare_data(data, time);
+		if (plotType == "Candle") {
+			var plot_ = prepare_data(data, time);
+		} else {
+			var plot_ = heineken_data(data, time);
+		}
 		// plot_sma = prepare_data_sma(data, time);
 		plot_sma = [];
 		plot_ema = prepare_data_ema(data, time, period = 50);

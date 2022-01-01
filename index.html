@@ -41,9 +41,15 @@
             <option value="1">1 min</option>
           </select>
           <input type="text" id="HiddenTime" hidden="True" value="D" />
+          <select id="dropDownPlotType">
+            <option value="Candle">Candles</option>
+            <option value="HeikenAshi">Heiken Ashi</option>
+          </select>
+          <input type="text" id="HiddenPlotType" hidden="True" value="Candle" />
           <span id="theme_toggler"> 💡 </span>
           <span id="theme_toggler">
-            <button onclick="get_symbol_on_press();coins_to_fetch();stables_to_fetch();" class="smallButton"></button>
+            <button onclick="get_symbol_on_press();coins_to_fetch();stables_to_fetch();" id="refreshBtn"
+              class="smallButton"></button>
           </span>
         </div>
       </div>
@@ -56,12 +62,12 @@
           <u>Price & Marketcap 24h & Total Volume*</u>
         </h2>
         <div id="coins" class="float-child">
-          <button onclick="coins_to_fetch()" class="smallButton"></button>
+          <button onclick="coins_to_fetch()" class="smallButton" id="refreshBtn1"></button>
           <h3 id="coin_info_title" class="marketcap_info"><u>Coins</u></h3>
         </div>
 
         <div id="stables" class="float-child">
-          <button onclick="stables_to_fetch()" class="smallButton"></button>
+          <button onclick="stables_to_fetch()" class="smallButton" id="refreshBtn2"></button>
           <h3 id="coin_info_title" class="marketcap_info"><u>Stables</u></h3>
         </div>
         <h5 id="updated_on_refresh">* updated on refresh</h5>
@@ -103,5 +109,6 @@
 </body>
 <script src="js/main.js"></script>
 <script src="js/window.js"></script>
+<script src="js/test.js"></script>
 
 </html>

@@ -156,6 +156,12 @@ nav {
 	min-height: var(--min-height);
 	cursor: pointer;
 	user-select: none;
+	border: none;
+	outline: none;
+}
+
+.invert {
+	filter: invert(100%);
 }
 
 html * {

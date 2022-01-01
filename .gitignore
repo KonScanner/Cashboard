@@ -2,6 +2,8 @@
 *.py
 data/
 src/
+test.js
+test.html
 
 *.json
 *.csv

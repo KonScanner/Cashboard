@@ -31,5 +31,14 @@ copyright_update()
 
 
 theme_toggler.addEventListener('click', function () {
+	if (document.getElementById("refreshBtn").classList.contains('invert') | document.getElementById("refreshBtn1").classList.contains('invert') | document.getElementById("refreshBtn2").classList.contains('invert')) {
+		document.getElementById("refreshBtn").classList.remove("invert");
+		document.getElementById("refreshBtn1").classList.remove("invert");
+		document.getElementById("refreshBtn2").classList.remove("invert");
+	} else {
+		document.getElementById("refreshBtn").classList.add("invert");
+		document.getElementById("refreshBtn1").classList.add("invert");
+		document.getElementById("refreshBtn2").classList.add("invert");
+	}
 	document.body.classList.toggle('dark_mode');
 });
