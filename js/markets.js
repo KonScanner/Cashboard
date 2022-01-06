@@ -1,4 +1,5 @@
 // Utilities
+let theme_toggler = document.querySelector('#theme_toggler');
 
 function check_nill(string) {
   if (string === undefined) {
@@ -66,9 +67,10 @@ function markets_to_create_html(id, element = "markets") {
 }
 
 function coingecko_markets_populate(data, id) {
+  const date = Date(data.updated_at);
   document.getElementById(`${id}_id`).title = check_nill(data.id);
-  document.getElementById(`${id}_name`).innerHTML = check_nill(data.name); // .title
-  document.getElementById(`updated_at`).innerHTML = check_nill(Date(data.updated_at));
+  document.getElementById(`${id}_name`).innerHTML = check_nill(`<a href="https://www.coingecko.com/en/categories/${data.id}">${data.name}</a>`); // .title
+  document.getElementById(`updated_at`).innerHTML = check_nill(date);
   document.getElementById(`${id}_market_cap_change_24h`).innerHTML = check_nill(
     data.market_cap_change_24h.toFixed(2) + " %"
   );
@@ -116,3 +118,7 @@ function markets_to_fetch_initialize() {
 // markets_to_fetch_initialize();
 coingecko_market_fetch();
 // get_marketcap();
+
+theme_toggler.addEventListener('click', function () {
+  document.body.classList.toggle('dark_mode');
+});

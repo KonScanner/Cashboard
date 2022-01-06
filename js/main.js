@@ -2,6 +2,7 @@ const supported_times = ["1", "5", "15", "30", "60", "4h", "1D", "D"]
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "astroport", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus", "invictus"];
 const supported_stables = ["tether", "usd-coin", "dai", "terrausd", "binance-usd", "magic-internet-money", "true-usd", "frax", "paxos-standard", "liquity-usd", "origin-dollar", "tether-eurt", "seur", "stasis-eurs", "tether-gold"];
 let graph = document.getElementById("chart");
+let theme_toggler = document.querySelector('#theme_toggler');
 /**
  * Charts & chart functions
  */
@@ -639,3 +640,16 @@ refresh_every_t();
 
 
 window.addEventListener('input', get_symbol, false);
+
+theme_toggler.addEventListener('click', function () {
+	if (document.getElementById("refreshBtn").classList.contains('invert') | document.getElementById("refreshBtn1").classList.contains('invert') | document.getElementById("refreshBtn2").classList.contains('invert')) {
+		document.getElementById("refreshBtn").classList.remove("invert");
+		document.getElementById("refreshBtn1").classList.remove("invert");
+		document.getElementById("refreshBtn2").classList.remove("invert");
+	} else {
+		document.getElementById("refreshBtn").classList.add("invert");
+		document.getElementById("refreshBtn1").classList.add("invert");
+		document.getElementById("refreshBtn2").classList.add("invert");
+	}
+	document.body.classList.toggle('dark_mode');
+});

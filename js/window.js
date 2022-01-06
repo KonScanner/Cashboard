@@ -1,5 +1,4 @@
 var mybutton = document.getElementById("myBtn");
-let theme_toggler = document.querySelector('#theme_toggler');
 const bar_height = Number(window.innerHeight * (window.innerHeight / document.body.offsetHeight))
 const height_to_scroll = (bar_height / 3); // CHANGE WHEN MORE PICS
 // When the user scrolls down 20px from the top of the document, show the button
@@ -28,17 +27,3 @@ function copyright_update() {
 	paragraph.innerHTML = 'Copyright &copy; ' + year + ' <a href="https://github.com/KonScanner">KonScanner</a><br>All Rights Reserved';
 }
 copyright_update()
-
-
-theme_toggler.addEventListener('click', function () {
-	if (document.getElementById("refreshBtn").classList.contains('invert') | document.getElementById("refreshBtn1").classList.contains('invert') | document.getElementById("refreshBtn2").classList.contains('invert')) {
-		document.getElementById("refreshBtn").classList.remove("invert");
-		document.getElementById("refreshBtn1").classList.remove("invert");
-		document.getElementById("refreshBtn2").classList.remove("invert");
-	} else {
-		document.getElementById("refreshBtn").classList.add("invert");
-		document.getElementById("refreshBtn1").classList.add("invert");
-		document.getElementById("refreshBtn2").classList.add("invert");
-	}
-	document.body.classList.toggle('dark_mode');
-});
