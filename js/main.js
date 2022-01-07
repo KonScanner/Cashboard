@@ -246,11 +246,12 @@ function get_symbol_on_press() {
 	if (document.getElementById("HiddenSymbol").value !== "" & document.getElementById("HiddenTime").value !== "") {
 		let symbol = document.getElementById("HiddenSymbol").value;
 		let time = document.getElementById("HiddenTime").value;
+		let plotType = document.getElementById("HiddenPlotType").value;
 		let to = String(date_to_unix(get_today()))
 		let from = String(deal_with_time(time = time, symbol = symbol));
 		console.log("to", to, "from", from);
 
-		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to);
+		get_data_with_symbol(symbol = symbol, time = time, from = from, to = to, plotType = plotType);
 	}
 }
 
@@ -459,7 +460,7 @@ function get_data_with_symbol(symbol, time, from, to, plotType) {
 		// The API call was successful!
 		return response.json();
 	}).then(function (data) {
-		if (plotType == "Candle") {
+		if (plotType === "Candle") {
 			var plot_ = prepare_data(data, time);
 		} else {
 			var plot_ = heineken_data(data, time);
