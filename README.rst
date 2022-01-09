@@ -17,14 +17,6 @@ Integrated APIs include:
 Todos:
 ------
     - Add More calculations/metrics on the side or on other pages.
-    - Add APIs that give interesting data & could be integrated into future versions of the project:
-        **LunarCrush**:
-            - https://lunarcrush.com/ Fetch api for info
-            - https://api.lunarcrush.com/v2
-            - "https://api.lunarcrush.com/v2?data=assets&key={API_KEY_HERE}&symbol=BTC"
-            - https://towardsdatascience.com/top-5-best-cryptocurrency-apis-for-developers-32475d2eb749
-        **Mesari**:
-            - https://data.messari.io/api
     - Make all operations async
     - Find a way to disallow spam refresh so coingecko does not temp-ban.
 
