@@ -1,0 +1,82 @@
+:root {
+	--body-bg: #f5f5f5;
+	--text-color: #252525;
+	--text-font: "Space Mono", monospace;
+	--text-weight: bold;
+	--text-size: 100%;
+	--width: 7.5%;
+	--min-width: 60px;
+	--min-height: 20px;
+}
+
+.dark_mode {
+	--body-bg: #252525;
+	--text-color: #f5f5f5;
+}
+
+.table {
+	background: var(--body-bg);
+	color: var(--text-color);
+	font-family: var(--text-font);
+	font-weight: var(--text-weight);
+	font-size: var(--text-size);
+}
+
+
+img {
+	width: 12.5%;
+	height: 12.5%;
+}
+
+td,
+th {
+	text-align: justify;
+}
+
+.box1 {
+	position: relative;
+	/* top: 50%;
+	left: 50%; */
+	/* transform: translate(-50%, -50%); */
+}
+
+.box1 select {
+	background-color: var(--text-color);
+	font-weight: bold;
+	text-align: center;
+	color: var(--body-bg);
+	padding: 0.5%;
+	border: none;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	-webkit-appearance: button;
+	appearance: button;
+	outline: none;
+	appearance: none;
+	overflow-y: hidden !important;
+	font-family: var(--text-font);
+	font-size: var(--text-size);
+	font-weight: bold;
+}
+
+.box1::before {
+	content: "\f13a";
+	font-family: FontAwesome;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 20%;
+	height: 100%;
+	text-align: center;
+	font-size: var(--text-size);
+	line-height: 45px;
+	pointer-events: none;
+}
+
+.box1:hover::before {
+	font-weight: bold;
+}
+
+.box1 select option {
+	padding: 30px;
+	font-weight: bold;
+}

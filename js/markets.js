@@ -1,124 +1,109 @@
-// Utilities
-let theme_toggler = document.querySelector('#theme_toggler');
+base_url = "https://api.coingecko.com/api/v3"
+coin_list_url = `${base_url}/coins/list`
+coin_categories_url = `${base_url}/coins/categories`
+coin_get_all = `${base_url}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250`
 
-function check_nill(string) {
-  if (string === undefined) {
-    return 404;
-  } else {
-    return string;
-  }
+function check_nill(item) {
+	if (item === undefined) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function return_nill_string(item) {
+	if (!check_nill(item)) {
+		return Number(item);
+	} else {
+		return "";
+	}
+}
+
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // Data
-function coingecko_market_fetch() {
-  fetch(`https://api.coingecko.com/api/v3/coins/categories`)
-    .then(function (response) {
-      // The API call was successful!
-      return response.json();
-    })
-    .then(function (data) {
-      coin_categories(data);
-    })
-    .catch(function (err) {
-      // There was an errr
-      console.warn(`Error ${err}`);
-    });
+function get_categories() {
+	fetch(`${coin_categories_url}`).then(function (response) {
+		// The API call was successful!
+		return response.json();
+	}).then(function (data) {
+		// debugger
+		display_category_options_html(data);
+	}).catch(function (err) {
+		// There was an errr
+		console.warn(`Error ${err}`);
+	});
 }
 
-function get_marketcap() {
-  fetch(`https://www.coingecko.com/market_cap/total_charts_data?locale=en&vs_currency=usd`)
-    .then(function (response) {
-      // The API call was successful!
-      return response.json();
-    })
-    .then(function (data) {
-      market_cap_pre(data);
-    })
-    .catch(function (err) {
-      // There was an errr
-      console.warn(`Error ${err}`);
-    });
+function get_coins_with_category(category) {
+	fetch(`${base_url}/coins/markets?vs_currency=usd&category=${category}&order=market_cap_desc&per_page=250&page=1&sparkline=false`).then(function (response) {
+		// The API call was successful!
+		return response.json();
+	}).then(function (data) {
+		url_helper_mktcap(data, element = "coinBody");
+	}).catch(function (err) {
+		// There was an errr
+		console.warn(`Error ${err}`);
+	});
 }
 
-function coin_categories(data) {
-  for (let i = 0; i < data.length; i++) {
-    markets_to_create_html(id = data[i].id);
-    coingecko_markets_populate(data[i], data[i].id);
-  }
+function get_category(event) {
+
+	if (event.target.id === 'dropCategory') {
+		document.getElementById("HiddenCategory").value = event.target.value;
+	}
+	if (document.getElementById("HiddenCategory").value !== "" | document.getElementById("HiddenCategory").value !== "smart-contract-platform") {
+		let category = document.getElementById("HiddenCategory").value;
+		get_coins_with_category(category = category);
+	}
 }
 
-function market_cap_pre(data) {
-  debugger
-  console.log(data);
+function url_helper_mktcap(data, element = "coinBody") {
+	var coins = document.getElementById(element);
+	var static_url = "https://www.coingecko.com/en/coins"
+	var str = "";
+	for (let i = 0; i < data.length; i++) {
+		let market_cap = return_nill_string(data[i].market_cap);
+		let total_volume = return_nill_string(data[i].total_volume);
+		var mktcapVolume = "";
+		if (market_cap !== "" && total_volume !== "") {
+			var mktcapVolume = Math.round((market_cap / total_volume) * 100) / 100;
+		}
+		str += `<tr>
+				<td><a href="${static_url}/${data[i].id}" id=${data[i].id}_id title=${data[i].symbol}><img id="${data[i].id}_image" src=${data[i].image} alt=""></a></td>
+				<td>${numberWithCommas(market_cap)}</td>
+				<td>${numberWithCommas(total_volume)}</td>
+				<td>${numberWithCommas(mktcapVolume)}</td>
+			</tr>`
+	}
+	coins.innerHTML = str;
 }
 
-function markets_to_create_html(id, element = "markets") {
-  var mydiv = document.getElementById(element);
-  var newElement = document.createElement("div");
-  var str = "<hr />";
-  str += `<a href="" id=${id}_id class="market_id" title=""><img id="${id}_image" class="coin_image2" src="" alt=""><img id="${id}_image2" class="coin_image2" src="" alt=""><img id="${id}_image3" class="coin_image2" src="" alt=""></a>
-      <h4 id=${id}_name></h4>
-			<h4 id="${id}_updated" class="marketcap_info"></h4>
-			<h4 id="${id}_market_cap_change_24h" class="marketcap_info"></h4>
-			<h4 id="${id}_marketcap" class="marketcap_info"></h4>
-			<h4 id="${id}_volume_24h" class="marketcap_info"></h4>`;
-  newElement.innerHTML = str;
-  mydiv.appendChild(newElement);
+function display_category_options_html(data) {
+	var mydiv = document.getElementById("dropCategory");
+	var newElement = document.createElement('div');
+	var str = ''
+
+	for (let i = 0; i < data.length; i++) {
+		let id = data[i].id;
+		let name = data[i].name;
+		let option = document.createElement("option");
+		option.text = name;
+		option.value = id;
+		let select = document.getElementById("dropCategory");
+		select.appendChild(option);
+	}
+
+	newElement.innerHTML = str;
+	mydiv.appendChild(newElement);
+
 }
 
-function coingecko_markets_populate(data, id) {
-  const date = Date(data.updated_at);
-  document.getElementById(`${id}_id`).title = check_nill(data.id);
-  document.getElementById(`${id}_name`).innerHTML = check_nill(`<a href="https://www.coingecko.com/en/categories/${data.id}">${data.name}</a>`); // .title
-  document.getElementById(`updated_at`).innerHTML = check_nill(date);
-  document.getElementById(`${id}_market_cap_change_24h`).innerHTML = check_nill(
-    data.market_cap_change_24h.toFixed(2) + " %"
-  );
-  document.getElementById(`${id}_marketcap`).innerHTML = check_nill(
-    data.market_cap
-    .toFixed(0)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " $"
-  );
-
-  document.getElementById(`${id}_volume_24h`).innerHTML = check_nill(
-    data.volume_24h
-    .toFixed(0)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " $"
-  );
-  // document.getElementById(`${id}_current_price`).innerHTML = check_nill(
-  //   data.market_data.current_price.usd
-  //     .toFixed(2)
-  //     .toString()
-  //     .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " $"
-  // );
-  if (data.top_3_coins !== undefined) {
-    document.getElementById(`${id}_image`).src = check_nill(data.top_3_coins[0]);
-    document.getElementById(`${id}_image2`).src = check_nill(data.top_3_coins[1]);
-    document.getElementById(`${id}_image3`).src = check_nill(data.top_3_coins[2]);
-  }
-
-  // var link = document.getElementById(`${coin}_id`);
-  // link.setAttribute("href", check_nill(data.links.homepage[0]));
-}
-
-
-function markets_to_fetch_initialize() {
-
-  // Markets
-  for (let i = 0; i < supported_stables.length; i++) {
-    markets_to_create_html(coin = supported_stables[i], element = "markets")
-
-  }
-  // coingecko_markets_fetch();
-}
-
-
-// markets_to_fetch_initialize();
-coingecko_market_fetch();
-// get_marketcap();
-
+window.addEventListener('input', get_category, false);
+get_coins_with_category(category = document.getElementById("HiddenCategory").value)
+get_categories();
 theme_toggler.addEventListener('click', function () {
-  document.body.classList.toggle('dark_mode');
+	document.body.classList.toggle('dark_mode');
 });

@@ -531,19 +531,6 @@ function woo_list(data) {
 
 }
 
-function coingecko_marketcap(symbol) {
-	if (symbol === "BTC_USDT") {
-		return;
-	}
-	if (symbol === "ETH_USDT") {
-		return;
-	}
-	if (symbol === "ADA_USDT") {
-		return;
-	} else {
-		console.warn(`coingecko_marketcap(${symbol}) -  Not implemented yet`)
-	}
-}
 
 function in_array(array, string) {
 	if (array.indexOf(string) > -1) {
