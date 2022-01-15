@@ -10,6 +10,8 @@
   <link rel="stylesheet" type="text/css" href="../css/external.css" />
   <link rel="stylesheet" type="text/css" href="../css/markets.css" />
   <link rel="stylesheet" type="text/css" href="../css/main.css" />
+  <!-- <link href="https://tofsjonas.github.io/sortable/sortable.css" rel="stylesheet" /> -->
+
   <title>Cashboard</title>
 </head>
 
@@ -29,19 +31,18 @@
         <label for="dropCategory">Category: </label>
         <select id="dropCategory">
         </select>
+        <input type="text" id="HiddenCategory" hidden="True" value="smart-contract-platform" />
       </div>
       <div class="float-container">
-        <table class="table">
-          <caption id="caption" style="padding-left: 8px;">List of coins</caption>
-          <input type="text" id="HiddenCategory" hidden="True" value="smart-contract-platform" />
+        <table class="table table-bordered sortable" id="coinTable" cellspacing="0" width="100%">
           <div id="categoryInfo">
           </div>
           <thead>
             <tr>
-              <th>Symbol</th>
-              <th>Marketcap</th>
-              <th>Volume</th>
-              <th>Marketcap/Volume</th>
+              <th class="th-sm">Symbol</th>
+              <th class="th-sm">Marketcap</th>
+              <th class="th-sm">Volume</th>
+              <th class="th-sm">Marketcap/Volume</th>
             </tr>
           </thead>
           <tbody id="coinBody">
@@ -57,5 +58,6 @@
 </body>
 <script src="../js/markets.js"></script>
 <script src="../js/window.js"></script>
+<script src="https://tofsjonas.github.io/sortable/sortable.js"></script>
 
 </html>

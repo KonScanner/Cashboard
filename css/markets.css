@@ -3,7 +3,6 @@
 	--text-color: #252525;
 	--text-font: "Space Mono", monospace;
 	--text-weight: bold;
-	--text-size: 100%;
 	--width: 7.5%;
 	--min-width: 60px;
 	--min-height: 20px;
@@ -14,12 +13,22 @@
 	--text-color: #f5f5f5;
 }
 
-.table {
+.table,
+.table-bordered,
+.td,
+.tr,
+.sortable {
 	background: var(--body-bg);
 	color: var(--text-color);
 	font-family: var(--text-font);
 	font-weight: var(--text-weight);
-	font-size: var(--text-size);
+}
+
+#coinBody {
+	background: var(--body-bg);
+	color: var(--text-color);
+	font-family: var(--text-font);
+	font-weight: var(--text-weight);
 }
 
 
@@ -54,7 +63,6 @@ th {
 	appearance: none;
 	overflow-y: hidden !important;
 	font-family: var(--text-font);
-	font-size: var(--text-size);
 	font-weight: bold;
 }
 
@@ -67,7 +75,6 @@ th {
 	width: 20%;
 	height: 100%;
 	text-align: center;
-	font-size: var(--text-size);
 	line-height: 45px;
 	pointer-events: none;
 }
@@ -79,4 +86,76 @@ th {
 .box1 select option {
 	padding: 30px;
 	font-weight: bold;
+}
+
+/* table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+	bottom: .5em;
+} */
+
+/* Fork of sortable
+https://github.com/tofsjonas/sortable/blob/main/sortable.min.css
+*/
+.sortable {
+	border-spacing: 0
+}
+
+.sortable tbody tr:nth-child(odd) {
+	background: var(--body-bg)
+}
+
+.sortable td,
+.sortable th {
+	padding: 10px
+}
+
+
+.sortable th {
+	background: var(--text-color);
+	color: var(--body-bg);
+	cursor: pointer;
+	text-align: left;
+	text-transform: capitalize;
+	vertical-align: baseline;
+	white-space: nowrap
+}
+
+.sortable th:hover {
+	color: gray;
+}
+
+.sortable th:hover::after {
+	color: inherit;
+	font-size: 1.2em;
+	content: ' \025B8'
+}
+
+.sortable th::after {
+	font-size: 1.2em;
+	color: transparent;
+	content: ' \025B8'
+}
+
+.sortable th.dir-d {
+	color: var(--body-bg);
+}
+
+.sortable th.dir-d::after {
+	content: ' \025BE'
+}
+
+.sortable th.dir-u {
+	color: var(--body-bg);
+}
+
+.sortable th.dir-u::after {
+	content: ' \025B4';
 }

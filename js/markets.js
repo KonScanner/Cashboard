@@ -73,9 +73,9 @@ function url_helper_mktcap(data, element = "coinBody") {
 		}
 		str += `<tr>
 				<td><a href="${static_url}/${data[i].id}" id=${data[i].id}_id title=${data[i].symbol}><img id="${data[i].id}_image" src=${data[i].image} alt=""></a></td>
-				<td>${numberWithCommas(market_cap)}</td>
-				<td>${numberWithCommas(total_volume)}</td>
-				<td>${numberWithCommas(mktcapVolume)}</td>
+				<td data-sort=${market_cap}>${numberWithCommas(market_cap)}</td>
+				<td data-sort=${total_volume}>${numberWithCommas(total_volume)}</td>
+				<td data-sort=${mktcapVolume}>${numberWithCommas(mktcapVolume)}</td>
 			</tr>`
 	}
 	coins.innerHTML = str;
@@ -100,6 +100,7 @@ function display_category_options_html(data) {
 	mydiv.appendChild(newElement);
 
 }
+
 
 window.addEventListener('input', get_category, false);
 get_coins_with_category(category = document.getElementById("HiddenCategory").value)
