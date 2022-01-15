@@ -265,7 +265,7 @@ hr {
 	margin-right: 2.5%;
 	margin-left: 2.5%;
 	float: left;
-	width: 13%;
+	width: 8.5%;
 }
 
 .coin_image:hover {
@@ -289,6 +289,11 @@ hr {
 	display: block;
 	text-align: center;
 	margin-right: auto;
+	background: var(--body-bg);
+	color: var(--text-color);
+	font-family: var(--text-font);
+	font-weight: var(--text-weight);
+	font-size: var(--text-size);
 }
 
 #market_info_title {
@@ -332,6 +337,10 @@ a:active {
 #main_title_center {
 	text-align: center;
 	padding-bottom: 1%;
+	background: var(--body-bg);
+	color: var(--text-color);
+	font-family: var(--text-font);
+	font-weight: var(--text-weight);
 }
 
 .main_title_center {
@@ -352,6 +361,10 @@ a:active {
 #useful_links_title {
 	text-align: center;
 	padding-top: 0.5%;
+	background: var(--body-bg);
+	color: var(--text-color);
+	font-family: var(--text-font);
+	font-weight: var(--text-weight);
 }
 
 
