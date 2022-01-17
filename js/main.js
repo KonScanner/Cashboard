@@ -523,7 +523,7 @@ function woo_list(data) {
 	for (let i = 0; i < data.data.rows.length; i++) {
 		if (data.data.rows[i]["fullname"] !== "Tether") {
 			// Doesn't fix the problem, but it over-writes.
-			coins[data.data.rows[i]["balance_token"] + "_USDT"] = data.data.rows[i]["fullname"];
+			coins["SPOT_" + data.data.rows[i]["balance_token"] + "_USDT"] = data.data.rows[i]["fullname"];
 		}
 	}
 
