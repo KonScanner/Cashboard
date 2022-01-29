@@ -1,6 +1,6 @@
 const supported_times = ["1", "5", "15", "30", "60", "4h", "1D", "D"]
 const supported_coins = ["bitcoin", "ethereum", "cardano", "matic-network", "curve-dao-token", "terra-luna", "anchor-protocol", "mirror-protocol", "astroport", "kujira", "cosmos", "monero", "solana", "avalanche-2", "chainlink", "fantom", "olympus", "invictus"];
-const supported_stables = ["tether", "usd-coin", "binance-usd", "terrausd", "dai", "magic-internet-money", "frax", "true-usd", "paxos-standard", "fei-usd", "liquity-usd", "neutrino", "alchemix-usd", "origin-dollar", "tether-eurt", "seur", "stasis-eurs", "tether-gold"];
+const supported_stables = ["tether", "usd-coin", "binance-usd", "terrausd", "dai", "frax", "true-usd", "paxos-standard", "fei-usd", "liquity-usd", "neutrino", "alchemix-usd", "origin-dollar", "magic-internet-money", "tether-eurt", "seur", "stasis-eurs", "tether-gold"];
 let graph = document.getElementById("chart");
 let theme_toggler = document.querySelector('#theme_toggler');
 /**
