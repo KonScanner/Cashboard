@@ -140,7 +140,12 @@ nav {
 .apexcharts-xaxis-texts-g,
 .apexcharts-xaxis,
 .apexcharts-yaxistooltip-0,
-.apexcharts-xaxistooltip-0 {
+.apexcharts-xaxistooltip-0,
+.apexcharts-menu,
+.apexcharts-menu-open,
+.apexcharts-menu-item,
+.exportSVG,
+.exportPNG {
 	background: var(--body-bg) !important;
 	background-color: var(--body-bg) !important;
 	color: var(--text-color) !important;
