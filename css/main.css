@@ -25,7 +25,6 @@ body {
 	font-size: var(--text-size);
 	margin: 0;
 	height: 100vh;
-	font-size: 100%;
 	vertical-align: baseline;
 }
 
@@ -34,7 +33,7 @@ body {
 	min-height: 100vh;
 	opacity: 0.95;
 	background-size: cover;
-	padding: 0rem 2rem;
+	padding: 2rem;
 }
 
 
@@ -203,11 +202,9 @@ div {
 	-webkit-appearance: button;
 	appearance: button;
 	outline: none;
-	appearance: none;
 	overflow-y: hidden !important;
 	font-family: var(--text-font);
 	font-size: var(--text-size);
-	font-weight: bold;
 }
 
 .box::before {
@@ -266,9 +263,6 @@ hr {
 	width: 80px;
 }
 
-.coin_image:hover {
-	opacity: 0.4;
-}
 
 .coin_image2 {
 	margin-top: 1.5%;
