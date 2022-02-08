@@ -6,196 +6,9 @@ let theme_toggler = document.querySelector('#theme_toggler');
 /**
  * Charts & chart functions
  */
-var opts = {
-	series: [],
-	// title: {
-	// 	text: "Price of asset vs Time",
-	// 	style: {
-	// 		fontFamily: '"Space Mono", monospace',
-	// 		fontWeight: undefined,
-	// 		colors: "lightgray"
-	// 	}
-	// },
-	chart: {
-		type: 'candlestick',
-		height: 450,
-		width: "99%",
-		zoom: {
-			autoScaleYaxis: true
-		},
-		redrawOnParentResize: true
-	},
 
-	dataLabels: {
-		enabled: false
-	},
-	markers: {
-		size: 0,
-		style: 'hollow',
-	},
-	xaxis: {
-		type: 'datetime',
-		tickAmount: 10,
-		labels: {
-			style: {
-				fontFamily: '"Space Mono", monospace',
-				fontWeight: undefined,
-				colors: "gray"
-			}
-		}
-	},
-	yaxis: {
-		forceNiceScale: true,
-		decimalsInFloat: 2,
-		lines: {
-			show: true
-		},
-		opposite: false,
-		tickAmount: 10,
-		labels: {
-			offsetX: -10,
-			offsetY: 2,
-			rotate: 0,
-			style: {
-				fontFamily: '"Space Mono", monospace',
-				fontWeight: undefined,
-				colors: "gray"
-			}
-		},
-		tooltip: {
-			enabled: true,
-			shared: true,
-			custom: [function ({
-				seriesIndex,
-				dataPointIndex,
-				w
-			}) {
-				return w.globals.series[seriesIndex][dataPointIndex]
-			}, function ({
-				seriesIndex,
-				dataPointIndex,
-				w
-			}) {
-				var o = w.globals.seriesCandleO[seriesIndex][dataPointIndex]
-				var h = w.globals.seriesCandleH[seriesIndex][dataPointIndex]
-				var l = w.globals.seriesCandleL[seriesIndex][dataPointIndex]
-				var c = w.globals.seriesCandleC[seriesIndex][dataPointIndex]
-				return (
-					''
-				)
-			}]
-		}
 
-	},
-	tooltip: {
-		x: {
-			show: true,
-			format: 'hh:mm - dd MMM yyyy'
-		},
-	},
-	grid: {
-		show: true,
-		borderColor: '#90A4AE',
-		strokeDashArray: 0,
-		position: 'back',
-		xaxis: {
-			lines: {
-				show: true
-			}
-		},
-		row: {
-			colors: undefined,
-			opacity: 0.9
-		},
-		column: {
-			colors: undefined,
-			opacity: 0.9
-		},
-		padding: {
-			top: 0,
-			right: 0,
-			bottom: 0,
-			left: 0,
-		},
-	},
 
-	noData: {
-		text: "Select Presets",
-		align: 'center',
-		verticalAlign: 'middle',
-		offsetX: 0,
-		offsetY: 0,
-		style: {
-			fontFamily: '"Space Mono", monospace',
-			fontWeight: undefined,
-			colors: "lightgray"
-		}
-	},
-	plotOptions: {
-		candlestick: {
-			wick: {
-				useFillColor: true,
-			}
-		}
-	},
-}
-
-var chart = new ApexCharts(
-	document.querySelector("#chart"),
-	opts
-);
-chart.render();
-
-function get_chart(data, data_sma, data_ema, symbol, min_date, max_date) {
-
-	var options = {
-		series: [{
-				name: `${symbol}`,
-				data: data,
-				type: 'candlestick',
-				title: {
-					text: `${symbol}`,
-				},
-			},
-			// {
-			// 	name: `${symbol}_sma`,
-			// 	data: data_sma,
-			// 	type: 'line',
-			// 	title: {
-			// 		text: `${symbol}`,
-			// 	},
-
-			// },
-			{
-				name: `${symbol}_ema_50`,
-				data: data_ema,
-				type: 'line',
-				title: {
-					text: `${symbol}`,
-				},
-				color: 'gray'
-
-			}
-		],
-		chart: {
-			zoom: {
-				autoScaleYaxis: true
-			},
-			redrawOnParentResize: true
-		},
-		stroke: {
-			curve: 'smooth',
-			width: [1, 3, 3]
-		},
-
-		xaxis: {
-			max: max_date,
-			min: min_date
-		}
-	};
-
-	chart.updateOptions(options);
-};
 
 function display_symbol_options_html(coins) {
 	var mydiv = document.getElementById("dropDownSymbol");
@@ -353,8 +166,8 @@ function prepare_data(data, time) {
 
 	let plot_ = []
 	for (let i = 0; i < data.o.length; i++) {
-		let c_p = [data.o[i], data.h[i], data.l[i], data.c[i]]
-		plot_.push([dates[i], c_p])
+		let c_p = [dates[i], data.o[i], data.h[i], data.l[i], data.c[i], data.v[i]]
+		plot_.push(c_p)
 	}
 	return plot_;
 
@@ -376,8 +189,8 @@ function heineken_data(data) {
 
 		var high = Math.max(data.h[i], data.o[i], data.c[i]);
 		var low = Math.min(data.l[i], data.o[i], data.c[i]);
-		var c_p = [open, high, low, close]
-		plot_.push([dates[i], c_p])
+		var c_p = [dates[i], open, high, low, close, data.v[i]]
+		plot_.push(c_p)
 	}
 	return plot_;
 }
@@ -451,6 +264,228 @@ function prepare_data_ema(data, time, period = 21) {
 	return plot_;
 }
 
+function get_chart(data, symbol) {
+
+	var mainOptions = {
+		rangeSelector: {
+			selected: 1
+		},
+		navigator: {
+			series: {
+				color: Highcharts.getOptions().colors[0]
+			}
+		},
+		series: [{
+				type: 'candlestick',
+				name: `${symbol}`,
+				data: data
+			},
+			Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')
+		]
+	}
+
+	var darcUnica = {
+		colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066',
+			'#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'
+		],
+		chart: {
+			backgroundColor: {
+				linearGradient: {
+					x1: 0,
+					y1: 0,
+					x2: 1,
+					y2: 1
+				},
+				stops: [
+					[0, '#2a2a2b'],
+					[1, '#3e3e40']
+				]
+			},
+			style: {
+				fontFamily: '\'Unica One\', sans-serif'
+			},
+			plotBorderColor: '#606063'
+		},
+		title: {
+			style: {
+				color: '#E0E0E3',
+				textTransform: 'uppercase',
+				fontSize: '20px'
+			}
+		},
+		subtitle: {
+			style: {
+				color: '#E0E0E3',
+				textTransform: 'uppercase'
+			}
+		},
+		xAxis: {
+			gridLineColor: '#707073',
+			labels: {
+				style: {
+					color: '#E0E0E3'
+				}
+			},
+			lineColor: '#707073',
+			minorGridLineColor: '#505053',
+			tickColor: '#707073',
+			title: {
+				style: {
+					color: '#A0A0A3'
+
+				}
+			}
+		},
+		yAxis: {
+			gridLineColor: '#707073',
+			labels: {
+				style: {
+					color: '#E0E0E3'
+				}
+			},
+			lineColor: '#707073',
+			minorGridLineColor: '#505053',
+			tickColor: '#707073',
+			tickWidth: 4,
+			title: {
+				style: {
+					color: '#A0A0A3'
+				}
+			}
+		},
+		tooltip: {
+			backgroundColor: 'rgba(0, 0, 0, 0.85)',
+			style: {
+				color: '#F0F0F0'
+			}
+		},
+		plotOptions: {
+			series: {
+				dataLabels: {
+					color: '#F0F0F3',
+					style: {
+						fontSize: '13px'
+					}
+				},
+				marker: {
+					lineColor: '#333'
+				}
+			},
+			boxplot: {
+				fillColor: '#505053'
+			},
+			candlestick: {
+				color: 'green',
+				upColor: 'red',
+				tickWidth: 4,
+			},
+		},
+		legend: {
+			backgroundColor: 'rgba(0, 0, 0, 0.5)',
+			itemStyle: {
+				color: '#E0E0E3'
+			},
+			itemHoverStyle: {
+				color: '#FFF'
+			},
+			itemHiddenStyle: {
+				color: '#606063'
+			},
+			title: {
+				style: {
+					color: '#C0C0C0'
+				}
+			}
+		},
+		credits: {
+			style: {
+				color: '#666'
+			}
+		},
+		labels: {
+			style: {
+				color: '#707073'
+			}
+		},
+		drilldown: {
+			activeAxisLabelStyle: {
+				color: '#F0F0F3'
+			},
+			activeDataLabelStyle: {
+				color: '#F0F0F3'
+			}
+		},
+		navigation: {
+			buttonOptions: {
+				symbolStroke: '#DDDDDD',
+				theme: {
+					fill: '#505053'
+				}
+			}
+		},
+		// scroll charts
+		rangeSelector: {
+			buttonTheme: {
+				fill: '#505053',
+				stroke: '#000000',
+				style: {
+					color: '#CCC'
+				},
+				states: {
+					hover: {
+						fill: '#707073',
+						stroke: '#000000',
+						style: {
+							color: 'white'
+						}
+					},
+					select: {
+						fill: '#000003',
+						stroke: '#000000',
+						style: {
+							color: 'white'
+						}
+					}
+				}
+			},
+			inputBoxBorderColor: '#505053',
+			inputStyle: {
+				backgroundColor: '#333',
+				color: 'silver'
+			},
+			labelStyle: {
+				color: 'silver'
+			}
+		},
+		navigator: {
+			handles: {
+				backgroundColor: '#666',
+				borderColor: '#AAA'
+			},
+			outlineColor: '#CCC',
+			maskFill: 'rgba(255,255,255,0.1)',
+			series: {
+				color: '#7798BF',
+				lineColor: '#A6C7ED'
+			},
+			xAxis: {
+				gridLineColor: '#505053'
+			}
+		},
+		scrollbar: {
+			barBackgroundColor: '#808083',
+			barBorderColor: '#808083',
+			buttonArrowColor: '#CCC',
+			buttonBackgroundColor: '#606063',
+			buttonBorderColor: '#606063',
+			rifleColor: '#FFF',
+			trackBackgroundColor: '#404043',
+			trackBorderColor: '#404043'
+		}
+	};
+	Highcharts.stockChart('chart', Highcharts.merge(mainOptions, darcUnica));
+};
+
 function get_data_with_symbol(symbol, time, from, to, plotType) {
 	// Fetches data, given symbol,time,from,to
 	let time_ = time;
@@ -468,7 +503,7 @@ function get_data_with_symbol(symbol, time, from, to, plotType) {
 		// plot_sma = prepare_data_sma(data, time);
 		plot_sma = [];
 		plot_ema = prepare_data_ema(data, time, period = 50);
-		get_chart(dates = plot_, data_sma = plot_sma, data_ema = plot_ema, symbol = symbol, max_date = dates.max, min_date = dates.min)
+		var chart = get_chart(data = plot_, symbol = `${symbol}`);
 	}).catch(function (err) {
 		// There was an errr
 		console.warn(`Error ${err}`);

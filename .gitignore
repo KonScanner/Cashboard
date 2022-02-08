@@ -5,6 +5,8 @@ src/
 test.js
 test.html
 js/markets_deprecated.js
+js/portfolio_test.js
+pages/portfolio_test.html
 
 *.json
 *.csv
