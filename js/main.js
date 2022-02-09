@@ -382,6 +382,24 @@ function heineken_data(data) {
 	return plot_;
 }
 
+function price_now(data, symbol) {
+	document.getElementById("symbol_now").innerHTML = symbol;
+	document.getElementById("price_now_open").innerHTML = `O: ${data.o.at(-1)}`;
+	document.getElementById("price_now_high").innerHTML = `H: ${data.h.at(-1)}`;
+	document.getElementById("price_now_low").innerHTML = `L: ${data.l.at(-1)}`;
+	document.getElementById("price_now_close").innerHTML = `C: ${data.c.at(-1)}`;
+	var sma20 = prepare_data_sma(data = data, time = 0, period = 20)
+	var sma200 = prepare_data_sma(data = data, time = 0, period = 200)
+	var ema21 = prepare_data_ema(data = data, time = 0, period = 21)
+	var sma_20_last = Number(sma20.at(-1).at(-1)[0]).toPrecision(5)
+	var ema_21_last = Number(ema21.at(-1).at(-1)[0]).toPrecision(5)
+	var sma_200_last = Number(sma200.at(-1).at(-1)[0]).toPrecision(5)
+	document.getElementById("sma20").innerHTML = `Sma20: ${sma_20_last}`;
+	document.getElementById("ema21").innerHTML = `Ema21: ${ema_21_last}`;
+	document.getElementById("sma200").innerHTML = `Sma200: ${sma_200_last}`;
+	debugger;
+}
+
 function avg(arr, idx, range) {
 	return sum(arr.slice(idx - range, idx)) / range;
 }
@@ -425,7 +443,7 @@ function ema(data, period = 21) {
 	return emaArray;
 };
 
-function prepare_data_sma(data, timne, period = 20) {
+function prepare_data_sma(data, time, period = 20) {
 	w_minus_1 = period - 1
 	let dates = data.t.slice(w_minus_1, data.t.length);
 	dates = dates.map(d => Math.floor(d * 1000));
@@ -469,6 +487,7 @@ function get_data_with_symbol(symbol, time, from, to, plotType) {
 		plot_sma = [];
 		plot_ema = prepare_data_ema(data, time, period = 50);
 		get_chart(dates = plot_, data_sma = plot_sma, data_ema = plot_ema, symbol = symbol, max_date = dates.max, min_date = dates.min)
+		price_now(data = data, symbol = symbol);
 	}).catch(function (err) {
 		// There was an errr
 		console.warn(`Error ${err}`);

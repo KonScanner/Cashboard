@@ -490,3 +490,9 @@ a:active {
 	background-color: gray;
 	color: var(--text-color);
 }
+
+.prices {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
