@@ -391,9 +391,9 @@ function price_now(data, symbol) {
 	var sma20 = prepare_data_sma(data = data, time = 0, period = 20)
 	var sma200 = prepare_data_sma(data = data, time = 0, period = 200)
 	var ema21 = prepare_data_ema(data = data, time = 0, period = 21)
-	var sma_20_last = Number(sma20.at(-1).at(-1)[0]).toPrecision(5)
-	var ema_21_last = Number(ema21.at(-1).at(-1)[0]).toPrecision(5)
-	var sma_200_last = Number(sma200.at(-1).at(-1)[0]).toPrecision(5)
+	let sma_20_last = Number(sma20.at(-1).at(-1)[0]).toPrecision(5)
+	let ema_21_last = Number(ema21.at(-1).at(-1)[0]).toPrecision(5)
+	let sma_200_last = Number(sma200.at(-1).at(-1)[0]).toPrecision(5)
 	document.getElementById("sma20").innerHTML = `Sma20: ${sma_20_last}`;
 	document.getElementById("ema21").innerHTML = `Ema21: ${ema_21_last}`;
 	document.getElementById("sma200").innerHTML = `Sma200: ${sma_200_last}`;
