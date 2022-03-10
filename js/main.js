@@ -15,7 +15,7 @@ var opts = {
 	// 		fontWeight: undefined,
 	// 		colors: "lightgray"
 	// 	}
-	// },
+	// }, 
 	chart: {
 		type: 'candlestick',
 		height: 450,
