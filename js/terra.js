@@ -134,6 +134,18 @@ var chart3 = new ApexCharts(
 );
 chart3.render();
 
+var chart4 = new ApexCharts(
+    document.querySelector("#chart4"),
+    opts2
+);
+chart4.render();
+
+var chart5 = new ApexCharts(
+    document.querySelector("#chart5"),
+    opts2
+);
+chart5.render();
+
 function get_chart_fps_luna_supply(data) {
 
     var options = {
@@ -235,6 +247,72 @@ function get_chart_fps_ratio(data) {
     chart3.updateOptions(options);
 };
 
+function get_chart_fps_daily(data) {
+
+    var options = {
+        series: [{
+            name: `Terra Daily TX Count`,
+            data: data,
+            type: 'line',
+            title: {
+                text: `some text`,
+            },
+        }],
+        title: {
+            text: "Terra Daily TX Count",
+            style: {
+                fontFamily: '"Space Mono", monospace',
+                fontWeight: undefined,
+                colors: "lightgray"
+            }
+        },
+        chart: {
+            zoom: {
+                autoScaleYaxis: true
+            },
+            redrawOnParentResize: true
+        },
+        xaxis: {
+            type: 'datetime',
+        },
+    };
+
+    chart4.updateOptions(options);
+};
+
+function get_chart_fps_daily2(data) {
+
+    var options = {
+        series: [{
+            name: `Terra Daily Active Unique Addresses`,
+            data: data,
+            type: 'line',
+            title: {
+                text: `some text`,
+            },
+        }],
+        title: {
+            text: "Terra Daily Active Unique Addresses",
+            style: {
+                fontFamily: '"Space Mono", monospace',
+                fontWeight: undefined,
+                colors: "lightgray"
+            }
+        },
+        chart: {
+            zoom: {
+                autoScaleYaxis: true
+            },
+            redrawOnParentResize: true
+        },
+        xaxis: {
+            type: 'datetime',
+        },
+    };
+
+    chart5.updateOptions(options);
+};
+
 
 function get_data_fps() {
     const flipside_url = 'https://api.flipsidecrypto.com/api/v2/queries/a7f7550b-21ba-4121-8dec-67a46f94a276/data/latest'
@@ -252,6 +330,20 @@ function get_data_fps() {
     });
 };
 
+function get_data_fps2() {
+    const flipside_url = 'https://api.flipsidecrypto.com/api/v2/queries/bfba12dc-34bc-42e9-bf35-8ad28ebaee32/data/latest'
+    fetch(flipside_url).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        var dataset = prepare_data_fps_daily(data);
+        var dataset2 = prepare_data_fps_daily2(data);
+        get_chart_fps_daily(dataset);
+        get_chart_fps_daily2(dataset2);
+    }).catch(function (err) {
+        console.warn(`Error ${err}`);
+    });
+};
+
 function prepare_data_fps_ratio(data) {
     let dataset = []
     for (let i = 0; i < data.length; i++) {
@@ -263,6 +355,44 @@ function prepare_data_fps_ratio(data) {
         }
         let c_p = [
             date_, data[i]["LUNA_UST_DIFF_RATIO"]
+        ]
+
+
+        dataset.push(c_p)
+    }
+    return dataset;
+}
+
+function prepare_data_fps_daily(data) {
+    let dataset = []
+    for (let i = 0; i < data.length; i++) {
+        let date_ = Math.floor(new Date(data[i]["TERRA_DATE"]).getTime())
+        if (data[i]["TERRA_TX_COUNT"] !== null | data[i]["TERRA_TX_COUNT"] === undefined) {
+            let c_p = [
+                date_, data[i]["TERRA_TX_COUNT"].toFixed(1)
+            ]
+        }
+        let c_p = [
+            date_, data[i]["TERRA_TX_COUNT"]
+        ]
+
+
+        dataset.push(c_p)
+    }
+    return dataset;
+}
+
+function prepare_data_fps_daily2(data) {
+    let dataset = []
+    for (let i = 0; i < data.length; i++) {
+        let date_ = Math.floor(new Date(data[i]["TERRA_DATE"]).getTime())
+        if (data[i]["TERRA_UQ_ADDRESSES"] !== null | data[i]["TERRA_UQ_ADDRESSES"] === undefined) {
+            let c_p = [
+                date_, data[i]["TERRA_UQ_ADDRESSES"].toFixed(1)
+            ]
+        }
+        let c_p = [
+            date_, data[i]["TERRA_UQ_ADDRESSES"]
         ]
 
 
@@ -310,3 +440,4 @@ function prepare_data_fps_luna_supply(data) {
 }
 
 get_data_fps();
+get_data_fps2();
