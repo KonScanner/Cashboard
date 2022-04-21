@@ -178,7 +178,7 @@ function get_chart_fps_luna_supply(data) {
     };
 
     chart.updateOptions(options);
-};
+}
 
 function get_chart_fps_ust_supply(data) {
 
@@ -212,7 +212,7 @@ function get_chart_fps_ust_supply(data) {
     };
 
     chart2.updateOptions(options);
-};
+}
 
 function get_chart_fps_ratio(data) {
 
@@ -245,7 +245,7 @@ function get_chart_fps_ratio(data) {
     };
 
     chart3.updateOptions(options);
-};
+}
 
 function get_chart_fps_daily(data) {
 
@@ -278,7 +278,7 @@ function get_chart_fps_daily(data) {
     };
 
     chart4.updateOptions(options);
-};
+}
 
 function get_chart_fps_daily2(data) {
 
@@ -311,7 +311,7 @@ function get_chart_fps_daily2(data) {
     };
 
     chart5.updateOptions(options);
-};
+}
 
 
 function get_data_fps() {
@@ -328,7 +328,7 @@ function get_data_fps() {
     }).catch(function (err) {
         console.warn(`Error ${err}`);
     });
-};
+}
 
 function get_data_fps2() {
     const flipside_url = 'https://api.flipsidecrypto.com/api/v2/queries/bfba12dc-34bc-42e9-bf35-8ad28ebaee32/data/latest'
@@ -342,7 +342,7 @@ function get_data_fps2() {
     }).catch(function (err) {
         console.warn(`Error ${err}`);
     });
-};
+}
 
 function prepare_data_fps_ratio(data) {
     let dataset = []
