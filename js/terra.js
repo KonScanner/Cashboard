@@ -367,13 +367,13 @@ function prepare_data_fps_daily(data) {
     let dataset = []
     for (let i = 0; i < data.length; i++) {
         let date_ = Math.floor(new Date(data[i]["TERRA_DATE"]).getTime())
-        if (data[i]["TERRA_TX_COUNT"] !== null | data[i]["TERRA_TX_COUNT"] === undefined) {
+        if (data[i]["TXN_COUNT"] !== null | data[i]["TXN_COUNT"] === undefined) {
             let c_p = [
-                date_, data[i]["TERRA_TX_COUNT"].toFixed(1)
+                date_, data[i]["TXN_COUNT"].toFixed(1)
             ]
         }
         let c_p = [
-            date_, data[i]["TERRA_TX_COUNT"]
+            date_, data[i]["TXN_COUNT"]
         ]
 
 
@@ -386,13 +386,13 @@ function prepare_data_fps_daily2(data) {
     let dataset = []
     for (let i = 0; i < data.length; i++) {
         let date_ = Math.floor(new Date(data[i]["TERRA_DATE"]).getTime())
-        if (data[i]["TERRA_UQ_ADDRESSES"] !== null | data[i]["TERRA_UQ_ADDRESSES"] === undefined) {
+        if (data[i]["ACTIVE_UNIQUE_ADDRESSES"] !== null | data[i]["ACTIVE_UNIQUE_ADDRESSES"] === undefined) {
             let c_p = [
-                date_, data[i]["TERRA_UQ_ADDRESSES"].toFixed(1)
+                date_, data[i]["ACTIVE_UNIQUE_ADDRESSES"].toFixed(1)
             ]
         }
         let c_p = [
-            date_, data[i]["TERRA_UQ_ADDRESSES"]
+            date_, data[i]["ACTIVE_UNIQUE_ADDRESSES"]
         ]
 
 
