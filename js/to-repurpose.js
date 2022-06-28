@@ -1,3 +1,4 @@
+// To be repurposed
 let graph = document.getElementById("chart1");
 let graph2 = document.getElementById("chart2");
 let graph3 = document.getElementById("chart3");
